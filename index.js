@@ -3,7 +3,7 @@
  *   Babel plugin to remove assertions on build.
  *   Encourages Design by Contract (DbC).
  * 
- * https://github.com/power-assert-js/babel-plugin-unassert
+ * https://github.com/twada/babel-plugin-unassert
  *
  * Copyright (c) 2015 Takuto Wada
  * Licensed under the MIT license.
