@@ -3,6 +3,11 @@ babel-plugin-unassert
 
 [Babel](http://babeljs.io/) plugin to remove assertions on build. Encourages Design by Contract (DbC).
 
+[![Build Status][travis-image]][travis-url]
+[![NPM version][npm-image]][npm-url]
+[![Dependency Status][depstat-image]][depstat-url]
+[![License][license-image]][license-url]
+
 
 INSTALL
 ---------------------------------------
@@ -83,3 +88,16 @@ AUTHOR
 LICENSE
 ---------------------------------------
 Licensed under the [MIT](http://twada.mit-license.org/) license.
+
+
+[npm-url]: https://npmjs.org/package/babel-plugin-unassert
+[npm-image]: https://badge.fury.io/js/babel-plugin-unassert.svg
+
+[travis-url]: http://travis-ci.org/twada/babel-plugin-unassert
+[travis-image]: https://secure.travis-ci.org/twada/babel-plugin-unassert.svg?branch=master
+
+[depstat-url]: https://gemnasium.com/twada/babel-plugin-unassert
+[depstat-image]: https://gemnasium.com/twada/babel-plugin-unassert.svg
+
+[license-url]: http://twada.mit-license.org/
+[license-image]: http://img.shields.io/badge/license-MIT-brightgreen.svg
