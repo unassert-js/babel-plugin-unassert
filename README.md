@@ -13,6 +13,7 @@ babel-plugin-unassert
 
 - [unassert](https://github.com/twada/unassert): Remove assertions from AST
 - [unassertify](https://github.com/twada/unassertify): Browserify transform to remove assertions on production build
+- [webpack-unassert-loader](https://github.com/zoncoen/webpack-unassert-loader): A webpack loader to remove assertions on production build
 
 
 INSTALL
