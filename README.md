@@ -9,6 +9,12 @@ babel-plugin-unassert
 [![License][license-image]][license-url]
 
 
+#### RELATED MODULES
+
+- [unassert](https://github.com/twada/unassert): Remove assertions from AST
+- [unassertify](https://github.com/twada/unassertify): Browserify transform to remove assertions on production build
+
+
 INSTALL
 ---------------------------------------
 
