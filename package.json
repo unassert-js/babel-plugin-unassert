@@ -9,7 +9,7 @@
   },
   "bugs": "https://github.com/twada/babel-plugin-unassert/issues",
   "dependencies": {
-    "escallmatch": "^1.4.1"
+    "escallmatch": "^1.4.2"
   },
   "devDependencies": {
     "babel": "^5.5.0",
