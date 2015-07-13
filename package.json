@@ -1,7 +1,7 @@
 {
   "name": "babel-plugin-unassert",
   "description": "Babel plugin to remove assertions on build",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": {
     "name": "Takuto Wada",
     "email": "takuto.wada@gmail.com",
