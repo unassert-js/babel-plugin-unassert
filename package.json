@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-unassert",
-  "description": "Babel plugin to remove assertions on build",
+  "description": "Babel plugin to encourage Design by Contract (DbC)",
   "version": "1.0.1",
   "author": {
     "name": "Takuto Wada",
