@@ -12,7 +12,7 @@
     "escallmatch": "^1.4.1"
   },
   "devDependencies": {
-    "babel": "^5.2.0",
+    "babel": "^5.5.0",
     "mocha": "^2.2.5",
     "xtend": "^4.0.0"
   },

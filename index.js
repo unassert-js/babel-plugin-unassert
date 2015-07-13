@@ -45,7 +45,7 @@ module.exports = function (babel) {
         CallExpression: {
             enter: function (currentNode, parentNode, scope, file) {
                 if (matchers.some(matches(currentNode))) {
-                    this.remove();
+                    this.dangerouslyRemove();
                 }
             }
         }
