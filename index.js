@@ -12,6 +12,8 @@
 'use strict';
 
 var escallmatch = require('escallmatch');
+var espurify = require('espurify');
+var deepEqual = require('deep-equal');
 var patterns = [
     'assert(value, [message])',
     'assert.ok(value, [message])',
@@ -30,6 +32,23 @@ var patterns = [
     'console.assert(value, [message])'
 ];
 
+var assertImportDeclaration = {
+    type: 'ImportDeclaration',
+    specifiers: [
+        {
+            type: 'ImportDefaultSpecifier',
+            local: {
+                type: 'Identifier',
+                name: 'assert'
+            }
+        }
+    ],
+    source: {
+        type: 'Literal',
+        value: 'assert'
+    }
+};
+
 function matches (node) {
     return function (matcher) {
         return matcher.test(node);
@@ -42,6 +61,13 @@ module.exports = function (babel) {
     });
 
     return new babel.Transformer('babel-plugin-unassert', {
+        ImportDeclaration: {
+            enter: function (currentNode, parentNode, scope, file) {
+                if (deepEqual(espurify(currentNode), assertImportDeclaration)) {
+                    this.dangerouslyRemove();
+                }
+            }
+        },
         CallExpression: {
             enter: function (currentNode, parentNode, scope, file) {
                 if (matchers.some(matches(currentNode))) {
