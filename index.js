@@ -49,6 +49,34 @@ var assertImportDeclaration = {
     }
 };
 
+var assertVariableDeclaration = {
+    type: 'VariableDeclaration',
+    declarations: [
+        {
+            type: 'VariableDeclarator',
+            id: {
+                type: 'Identifier',
+                name: 'assert'
+            },
+            init: {
+                type: 'CallExpression',
+                callee: {
+                    type: 'Identifier',
+                    name: 'require'
+                },
+                arguments: [
+                    {
+                        type: 'Literal',
+                        value: 'assert'
+                    }
+                ]
+            }
+        }
+    ],
+    kind: 'var'
+};
+
+
 function matches (node) {
     return function (matcher) {
         return matcher.test(node);
@@ -64,6 +92,13 @@ module.exports = function (babel) {
         ImportDeclaration: {
             enter: function (currentNode, parentNode, scope, file) {
                 if (deepEqual(espurify(currentNode), assertImportDeclaration)) {
+                    this.dangerouslyRemove();
+                }
+            }
+        },
+        VariableDeclaration: {
+            enter: function (currentNode, parentNode, scope, file) {
+                if (deepEqual(espurify(currentNode), assertVariableDeclaration)) {
                     this.dangerouslyRemove();
                 }
             }

@@ -21,5 +21,6 @@ function testTransform (fixtureName, extraOptions) {
 
 describe('babel-plugin-unassert', function () {
     testTransform('func');
+    testTransform('commonjs');
     testTransform('es6module');
 });
