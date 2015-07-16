@@ -24,4 +24,6 @@ describe('babel-plugin-unassert', function () {
     testTransform('commonjs');
     testTransform('commonjs_singlevar');
     testTransform('es6module');
+    testTransform('commonjs_powerassert');
+    testTransform('es6module_powerassert');
 });

@@ -35,7 +35,9 @@ var patterns = [
 
 var declarationPatterns = [
     'import assert from "assert"',
-    'var assert = require("assert")'
+    'var assert = require("assert")',
+    'import assert from "power-assert"',
+    'var assert = require("power-assert")'
 ];
 
 function matches (node) {
