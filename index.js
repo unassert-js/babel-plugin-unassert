@@ -32,50 +32,10 @@ var patterns = [
     'console.assert(value, [message])'
 ];
 
-var assertImportDeclaration = {
-    type: 'ImportDeclaration',
-    specifiers: [
-        {
-            type: 'ImportDefaultSpecifier',
-            local: {
-                type: 'Identifier',
-                name: 'assert'
-            }
-        }
-    ],
-    source: {
-        type: 'Literal',
-        value: 'assert'
-    }
-};
-
-var assertVariableDeclaration = {
-    type: 'VariableDeclaration',
-    declarations: [
-        {
-            type: 'VariableDeclarator',
-            id: {
-                type: 'Identifier',
-                name: 'assert'
-            },
-            init: {
-                type: 'CallExpression',
-                callee: {
-                    type: 'Identifier',
-                    name: 'require'
-                },
-                arguments: [
-                    {
-                        type: 'Literal',
-                        value: 'assert'
-                    }
-                ]
-            }
-        }
-    ],
-    kind: 'var'
-};
-
+var declarationPatterns = [
+    'import assert from "assert"',
+    'var assert = require("assert")'
+];
 
 function matches (node) {
     return function (matcher) {
@@ -88,21 +48,23 @@ module.exports = function (babel) {
         return escallmatch(pattern, { visitorKeys: babel.types.VISITOR_KEYS });
     });
 
+    var declarationHandler = (function () {
+        var blacklist = declarationPatterns.map(function (pt) {
+            var ast = babel.parse(pt, {sourceType: 'module'});
+            return espurify(ast.program.body[0]);
+        });
+        return {
+            enter: function (currentNode, parentNode, scope, file) {
+                if (blacklist.some(function (pt) { return deepEqual(espurify(currentNode), pt); })) {
+                    this.dangerouslyRemove();
+                }
+            }
+        };
+    })();
+
     return new babel.Transformer('babel-plugin-unassert', {
-        ImportDeclaration: {
-            enter: function (currentNode, parentNode, scope, file) {
-                if (deepEqual(espurify(currentNode), assertImportDeclaration)) {
-                    this.dangerouslyRemove();
-                }
-            }
-        },
-        VariableDeclaration: {
-            enter: function (currentNode, parentNode, scope, file) {
-                if (deepEqual(espurify(currentNode), assertVariableDeclaration)) {
-                    this.dangerouslyRemove();
-                }
-            }
-        },
+        ImportDeclaration: declarationHandler,
+        VariableDeclaration: declarationHandler,
         CallExpression: {
             enter: function (currentNode, parentNode, scope, file) {
                 if (matchers.some(matches(currentNode))) {
