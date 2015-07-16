@@ -14,6 +14,7 @@
 var escallmatch = require('escallmatch');
 var espurify = require('espurify');
 var deepEqual = require('deep-equal');
+var extend = require('xtend');
 var patterns = [
     'assert(value, [message])',
     'assert.ok(value, [message])',
@@ -48,30 +49,34 @@ module.exports = function (babel) {
         return escallmatch(pattern, { visitorKeys: babel.types.VISITOR_KEYS });
     });
 
-    var declarationHandler = (function () {
-        var blacklist = [];
-        declarationPatterns.forEach(function (pt) {
-            var ast = babel.parse(pt, {sourceType: 'module'});
+    var declarationHandlers = (function () {
+        var blacklist = {
+            ImportDeclaration: [],
+            VariableDeclarator: []
+        };
+        declarationPatterns.forEach(function (dcl) {
+            var ast = babel.parse(dcl, {sourceType: 'module'});
             var body0 = ast.program.body[0];
             if (body0.type === 'VariableDeclaration') {
                 // pick VariableDeclarator up
-                blacklist.push(espurify(body0.declarations[0]));
+                blacklist.VariableDeclarator.push(espurify(body0.declarations[0]));
             } else if (body0.type === 'ImportDeclaration') {
-                blacklist.push(espurify(body0));
+                blacklist.ImportDeclaration.push(espurify(body0));
             }
         });
-        return {
-            enter: function (currentNode, parentNode, scope, file) {
-                if (blacklist.some(function (pt) { return deepEqual(espurify(currentNode), pt); })) {
-                    this.dangerouslyRemove();
+        return Object.keys(blacklist).reduce(function (handlers, key) {
+            handlers[key] = {
+                enter: function (currentNode, parentNode, scope, file) {
+                    if (blacklist[key].some(function (node) { return deepEqual(espurify(currentNode), node); })) {
+                        this.dangerouslyRemove();
+                    }
                 }
-            }
-        };
+            };
+            return handlers;
+        }, {});
     })();
 
-    return new babel.Transformer('babel-plugin-unassert', {
-        ImportDeclaration: declarationHandler,
-        VariableDeclarator: declarationHandler,
+    return new babel.Transformer('babel-plugin-unassert', extend(declarationHandlers, {
         CallExpression: {
             enter: function (currentNode, parentNode, scope, file) {
                 if (matchers.some(matches(currentNode))) {
@@ -79,5 +84,5 @@ module.exports = function (babel) {
                 }
             }
         }
-    });
+    }));
 };
