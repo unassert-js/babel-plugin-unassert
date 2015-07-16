@@ -49,9 +49,16 @@ module.exports = function (babel) {
     });
 
     var declarationHandler = (function () {
-        var blacklist = declarationPatterns.map(function (pt) {
+        var blacklist = [];
+        declarationPatterns.forEach(function (pt) {
             var ast = babel.parse(pt, {sourceType: 'module'});
-            return espurify(ast.program.body[0]);
+            var body0 = ast.program.body[0];
+            if (body0.type === 'VariableDeclaration') {
+                // pick VariableDeclarator up
+                blacklist.push(espurify(body0.declarations[0]));
+            } else if (body0.type === 'ImportDeclaration') {
+                blacklist.push(espurify(body0));
+            }
         });
         return {
             enter: function (currentNode, parentNode, scope, file) {
@@ -64,7 +71,7 @@ module.exports = function (babel) {
 
     return new babel.Transformer('babel-plugin-unassert', {
         ImportDeclaration: declarationHandler,
-        VariableDeclaration: declarationHandler,
+        VariableDeclarator: declarationHandler,
         CallExpression: {
             enter: function (currentNode, parentNode, scope, file) {
                 if (matchers.some(matches(currentNode))) {
