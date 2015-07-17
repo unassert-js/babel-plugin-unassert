@@ -63,6 +63,8 @@ For given `math.js` below,
 ```javascript
 'use strict';
 
+var assert = require('assert');
+
 function add (a, b) {
     console.assert(typeof a === 'number');
     assert(!isNaN(a));
@@ -78,7 +80,35 @@ Run `babel` with `--plugins unassert` to transform tests.
 $ $(npm bin)/babel --plugins unassert /path/to/demo/math.js > /path/to/build/math.js
 ```
 
-You will see assert calls disappear.
+You will see assert calls and declarations disappear.
+
+```javascript
+'use strict';
+
+function add(a, b) {
+    return a + b;
+}
+```
+
+
+#### ES6 module and power-assert support
+
+babel-plugin-unassert supports ES6 module syntax and [power-assert](http://github.com/power-assert-js/power-assert).
+
+```javascript
+'use strict';
+
+import assert from 'power-assert';
+
+function add (a, b) {
+    assert(!isNaN(a));
+    assert.equal(typeof b, 'number');
+    assert.ok(!isNaN(b));
+    return a + b;
+}
+```
+
+becomes
 
 ```javascript
 'use strict';
