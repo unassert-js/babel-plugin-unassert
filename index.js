@@ -46,6 +46,12 @@ function matches (node) {
     };
 }
 
+function equivalentTree (node) {
+    return function (example) {
+        return deepEqual(espurify(node), example);
+    };
+}
+
 module.exports = function (babel) {
     var matchers = patterns.map(function (pattern) {
         return escallmatch(pattern, { visitorKeys: babel.types.VISITOR_KEYS });
@@ -69,7 +75,7 @@ module.exports = function (babel) {
         return Object.keys(blacklist).reduce(function (handlers, key) {
             handlers[key] = {
                 enter: function (currentNode, parentNode, scope, file) {
-                    if (blacklist[key].some(function (node) { return deepEqual(espurify(currentNode), node); })) {
+                    if (blacklist[key].some(equivalentTree(currentNode))) {
                         this.dangerouslyRemove();
                     }
                 }
