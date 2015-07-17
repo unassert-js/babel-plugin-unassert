@@ -1,3 +1,11 @@
+## [1.1.0](https://github.com/twada/babel-plugin-unassert/releases/tag/v1.1.0) (2015-07-17)
+
+
+#### Features
+
+* [support assert declaration removal](https://github.com/twada/babel-plugin-unassert/pull/1)
+
+
 ### [1.0.1](https://github.com/twada/babel-plugin-unassert/releases/tag/v1.0.1) (2015-07-13)
 
 
