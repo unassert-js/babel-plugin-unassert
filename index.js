@@ -60,6 +60,7 @@ module.exports = function (babel) {
     var declarationHandlers = (function () {
         var blacklist = {
             ImportDeclaration: [],
+            AssignmentExpression: [],
             VariableDeclarator: []
         };
         declarationPatterns.forEach(function (dcl) {
@@ -67,7 +68,15 @@ module.exports = function (babel) {
             var body0 = ast.program.body[0];
             if (body0.type === 'VariableDeclaration') {
                 // pick VariableDeclarator up
-                blacklist.VariableDeclarator.push(espurify(body0.declarations[0]));
+                var decl = espurify(body0.declarations[0]);
+                blacklist.VariableDeclarator.push(decl);
+                // mimic AssignmentExpression pattern
+                blacklist.AssignmentExpression.push({
+                    type: 'AssignmentExpression',
+                    operator: '=',
+                    left: decl.id,
+                    right: decl.init
+                });
             } else if (body0.type === 'ImportDeclaration') {
                 blacklist.ImportDeclaration.push(espurify(body0));
             }
