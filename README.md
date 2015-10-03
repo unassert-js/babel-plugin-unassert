@@ -119,6 +119,40 @@ function add(a, b) {
 ```
 
 
+SUPPORTED PATTERNS
+---------------------------------------
+
+Assertion expressions are removed when they match patterns below. In other words, babel-plugin-unassert removes assertion calls that are compatible with Node.js standard [assert](http://nodejs.org/api/assert.html) API (and `console.assert`).
+
+* `assert(value, [message])`
+* `assert.ok(value, [message])`
+* `assert.equal(actual, expected, [message])`
+* `assert.notEqual(actual, expected, [message])`
+* `assert.strictEqual(actual, expected, [message])`
+* `assert.notStrictEqual(actual, expected, [message])`
+* `assert.deepEqual(actual, expected, [message])`
+* `assert.notDeepEqual(actual, expected, [message])`
+* `assert.deepStrictEqual(actual, expected, [message])`
+* `assert.notDeepStrictEqual(actual, expected, [message])`
+* `assert.fail(actual, expected, message, operator)`
+* `assert.throws(block, [error], [message])`
+* `assert.doesNotThrow(block, [message])`
+* `assert.ifError(value)`
+* `console.assert(value, [message])`
+
+babel-plugin-unassert also removes assert variable declarations,
+
+* `var assert = require("assert")`
+* `var assert = require("power-assert")`
+* `import assert from "assert"`
+* `import assert from "power-assert"`
+
+and assignments.
+
+* `assert = require("assert")`
+* `assert = require("power-assert")`
+
+
 AUTHOR
 ---------------------------------------
 * [Takuto Wada](http://github.com/twada)
