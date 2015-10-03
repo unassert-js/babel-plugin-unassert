@@ -1,9 +1,17 @@
+## [1.2.0](https://github.com/twada/babel-plugin-unassert/releases/tag/v1.2.0) (2015-10-03)
+
+
+#### Features
+
+* support removal of assert variable assignment ([bf45e49d](https://github.com/twada/babel-plugin-unassert/commit/bf45e49d73be3edc51f512a55ae11153ba41c697))
+
+
 ## [1.1.0](https://github.com/twada/babel-plugin-unassert/releases/tag/v1.1.0) (2015-07-17)
 
 
 #### Features
 
-* [support assert declaration removal](https://github.com/twada/babel-plugin-unassert/pull/1)
+* [support removal of assert variable declaration](https://github.com/twada/babel-plugin-unassert/pull/1)
 
 
 ### [1.0.1](https://github.com/twada/babel-plugin-unassert/releases/tag/v1.0.1) (2015-07-13)
