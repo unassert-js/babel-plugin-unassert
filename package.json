@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-unassert",
-  "description": "Babel plugin to encourage Design by Contract (DbC)",
+  "description": "Babel plugin to encourage Design by Contract (DbC) by writing assertions in production code, and compiling them away from release",
   "version": "1.1.0",
   "author": {
     "name": "Takuto Wada",

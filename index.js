@@ -1,7 +1,7 @@
 /**
  * babel-plugin-unassert
- *   Babel plugin to remove assertions on build.
- *   Encourages Design by Contract (DbC).
+ *   Babel plugin to encourage Design by Contract (DbC)
+ *   by writing assertions in production code, and compiling them away from release.
  * 
  * https://github.com/twada/babel-plugin-unassert
  *

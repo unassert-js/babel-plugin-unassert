@@ -1,7 +1,7 @@
 babel-plugin-unassert
 ================================
 
-[Babel](http://babeljs.io/) plugin to encourage Design by Contract (DbC).
+[Babel](http://babeljs.io/) plugin to encourage Design by Contract (DbC) by writing assertions in production code, and compiling them away from release.
 
 babel-plugin-unassert removes assertions on build. So you can use assertions to declare preconditions, postconditions and invariants.
 
