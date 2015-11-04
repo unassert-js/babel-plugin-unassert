@@ -15,6 +15,29 @@ module.exports = function (babel) {
     var t = babel.types;
     return {
         visitor: {
+            AssignmentExpression: {
+                enter: function (nodePath, pluginPass) {
+                    if (!nodePath.equals('operator', '=')) {
+                        return;
+                    }
+                    var left = nodePath.get('left');
+                    var right = nodePath.get('right');
+                    if (!left.isIdentifier()) {
+                        return;
+                    }
+                    if (!right.isCallExpression()) {
+                        return;
+                    }
+                    var callee = right.get('callee');
+                    if (!(callee.isIdentifier() || callee.node.name !== 'require')) {
+                        return;
+                    }
+                    var arg = right.get('arguments')[0];
+                    if (arg.isLiteral() && (arg.node.value === 'assert' || arg.node.value === 'power-assert')) {
+                        nodePath.remove();
+                    }
+                }
+            },
             VariableDeclarator: {
                 enter: function (nodePath, pluginPass) {
                     if (!nodePath.get('id').isIdentifier()) {
