@@ -15,6 +15,21 @@ module.exports = function (babel) {
     var t = babel.types;
     return {
         visitor: {
+            ImportDeclaration: {
+                enter: function (nodePath, pluginPass) {
+                    var moduleName = nodePath.get('source').node.value;
+                    if (moduleName !== 'assert' && moduleName !== 'power-assert') {
+                        return;
+                    }
+                    var firstSpecifier = nodePath.get('specifiers')[0];
+                    if (!t.isImportDefaultSpecifier(firstSpecifier)) {
+                        return;
+                    }
+                    if (firstSpecifier.get('local').node.name === 'assert') {
+                        nodePath.remove();
+                    }
+                }
+            },
             CallExpression: {
                 enter: function (nodePath, pluginPass) {
                     var callee = nodePath.get('callee');
