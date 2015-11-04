@@ -3,7 +3,7 @@
 var assert = require('assert');
 var fs = require('fs');
 var path = require('path');
-var babel = require('babel');
+var babel = require('babel-core');
 var extend = require('xtend');
 
 function testTransform (fixtureName, extraOptions) {
