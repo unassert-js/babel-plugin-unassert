@@ -15,6 +15,27 @@ module.exports = function (babel) {
     var t = babel.types;
     return {
         visitor: {
+            VariableDeclarator: {
+                enter: function (nodePath, pluginPass) {
+                    if (!nodePath.get('id').isIdentifier()) {
+                        return;
+                    }
+                    if (nodePath.get('id').node.name !== 'assert') {
+                        return;
+                    }
+                    if (!nodePath.get('init').isCallExpression()) {
+                        return;
+                    }
+                    var callee = nodePath.get('init').get('callee');
+                    if (!(callee.isIdentifier() || callee.node.name !== 'require')) {
+                        return;
+                    }
+                    var arg = nodePath.get('init').get('arguments')[0];
+                    if (arg.isLiteral() && (arg.node.value === 'assert' || arg.node.value === 'power-assert')) {
+                        nodePath.remove();
+                    }
+                }
+            },
             ImportDeclaration: {
                 enter: function (nodePath, pluginPass) {
                     var moduleName = nodePath.get('source').node.value;
