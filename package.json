@@ -39,6 +39,6 @@
     "url": "http://github.com/twada/babel-plugin-unassert.git"
   },
   "scripts": {
-    "test": "mocha --timeout 5000"
+    "test": "mocha --timeout 0"
   }
 }
