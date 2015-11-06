@@ -1,3 +1,20 @@
+## [2.0.0](https://github.com/twada/babel-plugin-unassert/releases/tag/v2.0.0) (2015-11-07)
+
+
+#### Features
+
+* [Babel 6.x support](https://github.com/twada/babel-plugin-unassert/pull/2)
+
+
+#### Breaking Changes
+
+* Babel6 is incompatible with Babel5. For Babel5 or lower, you need to use the 1.2.x release of babel-plugin-unassert.
+
+```
+$ npm install --save-dev babel-plugin-unassert@1.2.0
+```
+
+
 ## [1.2.0](https://github.com/twada/babel-plugin-unassert/releases/tag/v1.2.0) (2015-10-03)
 
 
