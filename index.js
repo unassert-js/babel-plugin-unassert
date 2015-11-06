@@ -11,95 +11,80 @@
  */
 'use strict';
 
-var escallmatch = require('escallmatch');
-var espurify = require('espurify');
-var deepEqual = require('deep-equal');
-var extend = require('xtend');
-var patterns = [
-    'assert(value, [message])',
-    'assert.ok(value, [message])',
-    'assert.equal(actual, expected, [message])',
-    'assert.notEqual(actual, expected, [message])',
-    'assert.strictEqual(actual, expected, [message])',
-    'assert.notStrictEqual(actual, expected, [message])',
-    'assert.deepEqual(actual, expected, [message])',
-    'assert.notDeepEqual(actual, expected, [message])',
-    'assert.deepStrictEqual(actual, expected, [message])',
-    'assert.notDeepStrictEqual(actual, expected, [message])',
-    'assert.fail(actual, expected, message, operator)',
-    'assert.throws(block, [error], [message])',
-    'assert.doesNotThrow(block, [message])',
-    'assert.ifError(value)',
-    'console.assert(value, [message])'
-];
-
-var declarationPatterns = [
-    'import assert from "assert"',
-    'var assert = require("assert")',
-    'import assert from "power-assert"',
-    'var assert = require("power-assert")'
-];
-
-function matches (node) {
-    return function (matcher) {
-        return matcher.test(node);
-    };
-}
-
-function equivalentTree (node) {
-    return function (example) {
-        return deepEqual(espurify(node), example);
-    };
-}
-
 module.exports = function (babel) {
-    var matchers = patterns.map(function (pattern) {
-        return escallmatch(pattern, { visitorKeys: babel.types.VISITOR_KEYS });
-    });
-
-    var declarationHandlers = (function () {
-        var blacklist = {
-            ImportDeclaration: [],
-            AssignmentExpression: [],
-            VariableDeclarator: []
-        };
-        declarationPatterns.forEach(function (dcl) {
-            var ast = babel.parse(dcl, {sourceType: 'module'});
-            var body0 = ast.program.body[0];
-            if (body0.type === 'VariableDeclaration') {
-                // pick VariableDeclarator up
-                var decl = espurify(body0.declarations[0]);
-                blacklist.VariableDeclarator.push(decl);
-                // mimic AssignmentExpression pattern
-                blacklist.AssignmentExpression.push({
-                    type: 'AssignmentExpression',
-                    operator: '=',
-                    left: decl.id,
-                    right: decl.init
-                });
-            } else if (body0.type === 'ImportDeclaration') {
-                blacklist.ImportDeclaration.push(espurify(body0));
-            }
-        });
-        return Object.keys(blacklist).reduce(function (handlers, key) {
-            handlers[key] = {
-                enter: function (currentNode, parentNode, scope, file) {
-                    if (blacklist[key].some(equivalentTree(currentNode))) {
-                        this.dangerouslyRemove();
+    var t = babel.types;
+    return {
+        visitor: {
+            AssignmentExpression: {
+                enter: function (nodePath, pluginPass) {
+                    if (!nodePath.equals('operator', '=')) {
+                        return;
+                    }
+                    var left = nodePath.get('left');
+                    var right = nodePath.get('right');
+                    if (!left.isIdentifier()) {
+                        return;
+                    }
+                    if (!right.isCallExpression()) {
+                        return;
+                    }
+                    var callee = right.get('callee');
+                    if (!(callee.isIdentifier() || callee.node.name !== 'require')) {
+                        return;
+                    }
+                    var arg = right.get('arguments')[0];
+                    if (arg.isLiteral() && (arg.node.value === 'assert' || arg.node.value === 'power-assert')) {
+                        nodePath.remove();
                     }
                 }
-            };
-            return handlers;
-        }, {});
-    })();
-
-    return new babel.Transformer('babel-plugin-unassert', extend(declarationHandlers, {
-        CallExpression: {
-            enter: function (currentNode, parentNode, scope, file) {
-                if (matchers.some(matches(currentNode))) {
-                    this.dangerouslyRemove();
+            },
+            VariableDeclarator: {
+                enter: function (nodePath, pluginPass) {
+                    if (!nodePath.get('id').isIdentifier()) {
+                        return;
+                    }
+                    if (nodePath.get('id').node.name !== 'assert') {
+                        return;
+                    }
+                    if (!nodePath.get('init').isCallExpression()) {
+                        return;
+                    }
+                    var callee = nodePath.get('init').get('callee');
+                    if (!(callee.isIdentifier() || callee.node.name !== 'require')) {
+                        return;
+                    }
+                    var arg = nodePath.get('init').get('arguments')[0];
+                    if (arg.isLiteral() && (arg.node.value === 'assert' || arg.node.value === 'power-assert')) {
+                        nodePath.remove();
+                    }
+                }
+            },
+            ImportDeclaration: {
+                enter: function (nodePath, pluginPass) {
+                    var moduleName = nodePath.get('source').node.value;
+                    if (moduleName !== 'assert' && moduleName !== 'power-assert') {
+                        return;
+                    }
+                    var firstSpecifier = nodePath.get('specifiers')[0];
+                    if (!t.isImportDefaultSpecifier(firstSpecifier)) {
+                        return;
+                    }
+                    if (firstSpecifier.get('local').node.name === 'assert') {
+                        nodePath.remove();
+                    }
+                }
+            },
+            CallExpression: {
+                enter: function (nodePath, pluginPass) {
+                    var callee = nodePath.get('callee');
+                    if ((callee.isIdentifier() && callee.node.name === 'assert')
+                        || callee.matchesPattern('assert', true)
+                        || callee.matchesPattern('console.assert')
+                       ) {
+                           nodePath.remove();
+                       }
                 }
             }
         }
-    }));
+    };
 };
