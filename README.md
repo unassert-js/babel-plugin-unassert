@@ -11,10 +11,19 @@ babel-plugin-unassert removes assertions on build. So you can use assertions to 
 [![License][license-image]][license-url]
 
 
+#### CAUTION
+
+For Babel 5 or lower, you need to use the 1.2.x release of babel-plugin-unassert.
+
+```
+$ npm install --save-dev babel-plugin-unassert@1.2.0
+```
+
+
 #### RELATED MODULES
 
-- [unassert](https://github.com/twada/unassert): Remove assertions from AST
-- [unassertify](https://github.com/twada/unassertify): Browserify transform to remove assertions on production build
+- [unassert](https://github.com/twada/unassert): Encourage Design by Contract (DbC) by writing assertions in production code, and compiling them away from release
+- [unassertify](https://github.com/twada/unassertify): Browserify transform to encourage Design by Contract (DbC) by writing assertions in production code, and compiling them away from release
 - [webpack-unassert-loader](https://github.com/zoncoen/webpack-unassert-loader): A webpack loader to remove assertions on production build
 
 
@@ -33,13 +42,13 @@ HOW TO USE
 ### via [Babel CLI](http://babeljs.io/docs/usage/cli/)
 
 ```
-$ $(npm bin)/babel --plugins babel-plugin-unassert /path/to/src/target.js > /path/to/build/target.js
+$ babel --plugins babel-plugin-unassert /path/to/src/target.js > /path/to/build/target.js
 ```
 
 or shortly,
 
 ```
-$ $(npm bin)/babel --plugins unassert /path/to/src/target.js > /path/to/build/target.js
+$ babel --plugins unassert /path/to/src/target.js > /path/to/build/target.js
 ```
 
 
@@ -52,6 +61,21 @@ var transformed = babel.transform(jsCode, {
     plugins: ['babel-plugin-unassert']
 });
 console.log(transformed.code);
+```
+
+
+### via [.babelrc](http://babeljs.io/docs/usage/babelrc/)
+
+```javascript
+{
+  "env": {
+    "production": {
+      "plugins": [
+        "babel-plugin-unassert"
+      ]
+    }
+  }
+}
 ```
 
 
@@ -77,7 +101,7 @@ function add (a, b) {
 Run `babel` with `--plugins unassert` to transform tests.
 
 ```
-$ $(npm bin)/babel --plugins unassert /path/to/demo/math.js > /path/to/build/math.js
+$ babel --plugins unassert /path/to/demo/math.js > /path/to/build/math.js
 ```
 
 You will see assert calls and declarations disappear.
