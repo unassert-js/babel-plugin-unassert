@@ -12,7 +12,6 @@
 'use strict';
 
 module.exports = function (babel) {
-    var t = babel.types;
     return {
         visitor: {
             AssignmentExpression: {
@@ -29,47 +28,44 @@ module.exports = function (babel) {
                         return;
                     }
                     var callee = right.get('callee');
-                    if (!(callee.isIdentifier() || callee.node.name !== 'require')) {
-                        return;
-                    }
                     var arg = right.get('arguments')[0];
-                    if (arg.isLiteral() && (arg.node.value === 'assert' || arg.node.value === 'power-assert')) {
+                    if (isRequireAssert(callee, arg)) {
                         nodePath.remove();
                     }
                 }
             },
             VariableDeclarator: {
                 enter: function (nodePath, pluginPass) {
-                    if (!nodePath.get('id').isIdentifier()) {
+                    var id = nodePath.get('id');
+                    if (!id.isIdentifier()) {
                         return;
                     }
-                    if (nodePath.get('id').node.name !== 'assert') {
+                    if (!id.equals('name', 'assert')) {
                         return;
                     }
-                    if (!nodePath.get('init').isCallExpression()) {
+                    var init = nodePath.get('init');
+                    if (!init.isCallExpression()) {
                         return;
                     }
-                    var callee = nodePath.get('init').get('callee');
-                    if (!(callee.isIdentifier() || callee.node.name !== 'require')) {
-                        return;
-                    }
-                    var arg = nodePath.get('init').get('arguments')[0];
-                    if (arg.isLiteral() && (arg.node.value === 'assert' || arg.node.value === 'power-assert')) {
+                    var callee = init.get('callee');
+                    var arg = init.get('arguments')[0];
+                    if (isRequireAssert(callee, arg)) {
                         nodePath.remove();
                     }
                 }
             },
             ImportDeclaration: {
                 enter: function (nodePath, pluginPass) {
-                    var moduleName = nodePath.get('source').node.value;
-                    if (moduleName !== 'assert' && moduleName !== 'power-assert') {
+                    var source = nodePath.get('source');
+                    if (!(source.equals('value', 'assert') || source.equals('value', 'power-assert'))) {
                         return;
                     }
                     var firstSpecifier = nodePath.get('specifiers')[0];
-                    if (!t.isImportDefaultSpecifier(firstSpecifier)) {
+                    if (!firstSpecifier.isImportDefaultSpecifier()) {
                         return;
                     }
-                    if (firstSpecifier.get('local').node.name === 'assert') {
+                    var local = firstSpecifier.get('local');
+                    if (local.equals('name', 'assert')) {
                         nodePath.remove();
                     }
                 }
@@ -77,7 +73,7 @@ module.exports = function (babel) {
             CallExpression: {
                 enter: function (nodePath, pluginPass) {
                     var callee = nodePath.get('callee');
-                    if ((callee.isIdentifier() && callee.node.name === 'assert')
+                    if ((callee.isIdentifier() && callee.equals('name', 'assert'))
                         || callee.matchesPattern('assert', true)
                         || callee.matchesPattern('console.assert')
                        ) {
@@ -88,3 +84,10 @@ module.exports = function (babel) {
         }
     };
 };
+
+function isRequireAssert (callee, arg) {
+    if (!callee.isIdentifier() || !callee.equals('name', 'require')) {
+        return false;
+    }
+    return (arg.isLiteral() && (arg.equals('value', 'assert') || arg.equals('value', 'power-assert')));
+}
