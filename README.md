@@ -11,15 +11,6 @@ babel-plugin-unassert
 babel-plugin-unassert removes assertions on build. So you can use assertions to declare preconditions, postconditions and invariants.
 
 
-#### CAUTION
-
-For Babel 5 or lower, you need to use the 1.2.x release of babel-plugin-unassert.
-
-```
-$ npm install --save-dev babel-plugin-unassert@1.2.0
-```
-
-
 #### RELATED MODULES
 
 - [unassert](https://github.com/twada/unassert): Encourage Design by Contract (DbC) by writing assertions in production code, and compiling them away from release
@@ -32,6 +23,16 @@ INSTALL
 
 ```
 $ npm install --save-dev babel-plugin-unassert
+```
+
+
+CAUTION
+---------------------------------------
+
+For Babel 5 or lower, you need to use the 1.2.x release of babel-plugin-unassert.
+
+```
+$ npm install --save-dev babel-plugin-unassert@1.2.0
 ```
 
 
