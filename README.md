@@ -59,6 +59,7 @@ $ babel --plugins unassert /path/to/src/target.js > /path/to/build/target.js
 var babel = require('babel-core');
 var jsCode = fs.readFileSync('/path/to/src/target.js');
 var transformed = babel.transform(jsCode, {
+    presets: [...],
     plugins: ['babel-plugin-unassert']
 });
 console.log(transformed.code);
@@ -69,6 +70,9 @@ console.log(transformed.code);
 
 ```javascript
 {
+  "presets": [
+    ...
+  ],
   "env": {
     "production": {
       "plugins": [
