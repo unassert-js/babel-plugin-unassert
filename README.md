@@ -124,14 +124,40 @@ function add(a, b) {
 
 babel-plugin-unassert supports ES6 module syntax and [power-assert](http://github.com/power-assert-js/power-assert).
 
+with [.babelrc](http://babeljs.io/docs/usage/babelrc/),
+
+```javascript
+{
+  "presets": [
+    ...
+  ],
+  "env": {
+    "development": {
+      "plugins": [
+        "babel-plugin-espower"
+      ],
+    },
+    "production": {
+      "plugins": [
+        "babel-plugin-unassert"
+      ]
+    }
+  }
+}
+```
+
+production code below
+
 ```javascript
 import assert from 'power-assert';
 
-function add (a, b) {
-    assert(!isNaN(a));
-    assert.equal(typeof b, 'number');
-    assert.ok(!isNaN(b));
-    return a + b;
+class Calc {
+    add (a, b) {
+        assert(!(isNaN(a) || isNaN(b)));
+        assert(typeof a === 'number');
+        assert(typeof b === 'number');
+        return a + b;
+    }
 }
 ```
 
@@ -140,10 +166,26 @@ becomes
 ```javascript
 'use strict';
 
-function add(a, b) {
-    return a + b;
+class Calc {
+    add(a, b) {
+        return a + b;
+    }
 }
 ```
+
+in production, and produces power-assert messages like
+
+```
+AssertionError:   # example.js:5
+
+  assert(!(isNaN(a) || isNaN(b)))
+         | |     |  |  |     |
+         | |     |  |  true  NaN
+         | false 3  true
+         false
+```
+
+in development.
 
 
 SUPPORTED PATTERNS
