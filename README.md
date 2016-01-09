@@ -126,7 +126,7 @@ function add(a, b) {
 
 #### ES6 module and power-assert support
 
-babel-plugin-unassert supports ES6 module syntax and [power-assert](http://github.com/power-assert-js/power-assert).
+babel-plugin-unassert supports ES6 module syntax and [power-assert](https://github.com/power-assert-js/power-assert).
 
 with [.babelrc](http://babeljs.io/docs/usage/babelrc/),
 
@@ -195,7 +195,7 @@ in development.
 SUPPORTED PATTERNS
 ---------------------------------------
 
-Assertion expressions are removed when they match patterns below. In other words, babel-plugin-unassert removes assertion calls that are compatible with Node.js standard [assert](http://nodejs.org/api/assert.html) API (and `console.assert`).
+Assertion expressions are removed when they match patterns below. In other words, babel-plugin-unassert removes assertion calls that are compatible with Node.js standard [assert](https://nodejs.org/api/assert.html) API (and `console.assert`).
 
 * `assert(value, [message])`
 * `assert.ok(value, [message])`
@@ -228,7 +228,7 @@ and assignments.
 
 AUTHOR
 ---------------------------------------
-* [Takuto Wada](http://github.com/twada)
+* [Takuto Wada](https://github.com/twada)
 
 
 LICENSE
@@ -239,11 +239,11 @@ Licensed under the [MIT](http://twada.mit-license.org/2015-2016) license.
 [npm-url]: https://npmjs.org/package/babel-plugin-unassert
 [npm-image]: https://badge.fury.io/js/babel-plugin-unassert.svg
 
-[travis-url]: http://travis-ci.org/twada/babel-plugin-unassert
+[travis-url]: https://travis-ci.org/twada/babel-plugin-unassert
 [travis-image]: https://secure.travis-ci.org/twada/babel-plugin-unassert.svg?branch=master
 
 [depstat-url]: https://gemnasium.com/twada/babel-plugin-unassert
 [depstat-image]: https://gemnasium.com/twada/babel-plugin-unassert.svg
 
 [license-url]: http://twada.mit-license.org/2015-2016
-[license-image]: http://img.shields.io/badge/license-MIT-brightgreen.svg
+[license-image]: https://img.shields.io/badge/license-MIT-brightgreen.svg
