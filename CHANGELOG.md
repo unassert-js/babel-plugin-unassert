@@ -1,3 +1,11 @@
+### [2.0.1](https://github.com/twada/babel-plugin-unassert/releases/tag/v2.0.1) (2016-01-09)
+
+
+#### Bug Fixes
+
+* remove unnecessary dependencies ([bb28b466](https://github.com/twada/babel-plugin-unassert/commit/bb28b4666de0ffdf7c86f78f03a35ef1372e1d1c))
+
+
 ## [2.0.0](https://github.com/twada/babel-plugin-unassert/releases/tag/v2.0.0) (2015-11-07)
 
 
