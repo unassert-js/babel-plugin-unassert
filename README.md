@@ -1,7 +1,7 @@
 babel-plugin-unassert
 ================================
 
-[Babel](http://babeljs.io/) plugin to encourage Design by Contract (DbC) by writing assertions in production code, and compiling them away from release.
+[Babel](http://babeljs.io/) plugin to encourage reliable programming by writing assertions in production code, and compiling them away from release.
 
 [![Build Status][travis-image]][travis-url]
 [![NPM version][npm-image]][npm-url]
@@ -13,9 +13,10 @@ babel-plugin-unassert removes assertions on build. So you can use assertions to 
 
 #### RELATED MODULES
 
-- [unassert](https://github.com/twada/unassert): Encourage Design by Contract (DbC) by writing assertions in production code, and compiling them away from release
-- [unassertify](https://github.com/twada/unassertify): Browserify transform to encourage Design by Contract (DbC) by writing assertions in production code, and compiling them away from release
-- [webpack-unassert-loader](https://github.com/zoncoen/webpack-unassert-loader): A webpack loader to remove assertions on production build
+- [unassert](https://github.com/twada/unassert): Encourage reliable programming by writing assertions in production code, and compiling them away from release.
+- [unassertify](https://github.com/twada/unassertify): Browserify transform for unassert
+- [webpack-unassert-loader](https://github.com/zoncoen/webpack-unassert-loader): Webpack loader for unassert
+- [gulp-unassert](https://github.com/twada/gulp-unassert): Gulp plugin for unassert
 
 
 INSTALL
