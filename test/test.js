@@ -6,10 +6,11 @@ var path = require('path');
 var babel = require('babel-core');
 var extend = require('xtend');
 
-function testTransform (fixtureName, extraOptions) {
+function testTransform (fixtureName, extraOptions, extraSuffix) {
     it(fixtureName, function () {
+        var suffix = extraSuffix ? '-' + extraSuffix : '';
         var fixtureFilepath = path.resolve(__dirname, 'fixtures', fixtureName, 'fixture.js');
-        var expectedFilepath = path.resolve(__dirname, 'fixtures', fixtureName, 'expected.js');
+        var expectedFilepath = path.resolve(__dirname, 'fixtures', fixtureName, 'expected' + suffix + '.js');
         var result = babel.transformFileSync(fixtureFilepath, extend({
             plugins: ['../index']
         }, extraOptions));
@@ -39,5 +40,5 @@ describe('babel-plugin-unassert with presets', function () {
     testTransform('commonjs_powerassert', opt);
     testTransform('es6module_powerassert', opt);
     testTransform('assignment', opt);
-    testTransform('assignment_singlevar', opt);
+    testTransform('assignment_singlevar', opt, 'presets-es2015');
 });
