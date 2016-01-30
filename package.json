@@ -5,7 +5,7 @@
   "author": {
     "name": "Takuto Wada",
     "email": "takuto.wada@gmail.com",
-    "url": "http://github.com/twada"
+    "url": "https://github.com/twada"
   },
   "bugs": "https://github.com/twada/babel-plugin-unassert/issues",
   "devDependencies": {
@@ -20,7 +20,7 @@
     "index.js",
     "package.json"
   ],
-  "homepage": "http://github.com/twada/babel-plugin-unassert",
+  "homepage": "https://github.com/twada/babel-plugin-unassert",
   "keywords": [
     "DbC",
     "assert",
@@ -31,7 +31,7 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "http://github.com/twada/babel-plugin-unassert.git"
+    "url": "https://github.com/twada/babel-plugin-unassert.git"
   },
   "scripts": {
     "test": "mocha --timeout 0"
