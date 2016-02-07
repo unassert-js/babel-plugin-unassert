@@ -17,6 +17,7 @@ babel-plugin-unassert removes assertions on build. So you can use assertions to 
 - [unassertify](https://github.com/twada/unassertify): Browserify transform for unassert
 - [webpack-unassert-loader](https://github.com/zoncoen/webpack-unassert-loader): Webpack loader for unassert
 - [gulp-unassert](https://github.com/twada/gulp-unassert): Gulp plugin for unassert
+- [unassert-cli](https://github.com/twada/unassert-cli): CLI for unassert
 
 
 INSTALL
