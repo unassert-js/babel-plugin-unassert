@@ -1,5 +1,7 @@
 'use strict';
 
+delete require.cache[require.resolve('..')];
+var unassert = require('..');
 var assert = require('assert');
 var fs = require('fs');
 var path = require('path');
@@ -12,7 +14,7 @@ function testTransform (fixtureName, extraOptions, extraSuffix) {
         var fixtureFilepath = path.resolve(__dirname, 'fixtures', fixtureName, 'fixture.js');
         var expectedFilepath = path.resolve(__dirname, 'fixtures', fixtureName, 'expected' + suffix + '.js');
         var result = babel.transformFileSync(fixtureFilepath, extend({
-            plugins: ['../index']
+            plugins: [ unassert ]
         }, extraOptions));
         var actual = result.code;
         var expected = fs.readFileSync(expectedFilepath).toString();
