@@ -109,7 +109,7 @@ function add (a, b) {
 }
 ```
 
-Run `babel` with `--plugins unassert` to transform tests.
+Run `babel` with `--plugins unassert` to transform code.
 
 ```
 $ babel --plugins unassert /path/to/demo/math.js > /path/to/build/math.js
