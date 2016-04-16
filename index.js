@@ -20,10 +20,13 @@ module.exports = function (babel) {
                         return;
                     }
                     var left = nodePath.get('left');
-                    var right = nodePath.get('right');
                     if (!left.isIdentifier()) {
                         return;
                     }
+                    if (!left.equals('name', 'assert')) {
+                        return;
+                    }
+                    var right = nodePath.get('right');
                     if (!right.isCallExpression()) {
                         return;
                     }
