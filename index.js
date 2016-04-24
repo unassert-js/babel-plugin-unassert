@@ -19,40 +19,14 @@ module.exports = function (babel) {
                     if (!nodePath.equals('operator', '=')) {
                         return;
                     }
-                    var left = nodePath.get('left');
-                    if (!left.isIdentifier()) {
-                        return;
-                    }
-                    if (!left.equals('name', 'assert')) {
-                        return;
-                    }
-                    var right = nodePath.get('right');
-                    if (!right.isCallExpression()) {
-                        return;
-                    }
-                    var callee = right.get('callee');
-                    var arg = right.get('arguments')[0];
-                    if (isRequireAssert(callee, arg)) {
+                    if (isRequireAssert(nodePath.get('left'), nodePath.get('right'))) {
                         nodePath.remove();
                     }
                 }
             },
             VariableDeclarator: {
                 enter: function (nodePath, pluginPass) {
-                    var id = nodePath.get('id');
-                    if (!id.isIdentifier()) {
-                        return;
-                    }
-                    if (!id.equals('name', 'assert')) {
-                        return;
-                    }
-                    var init = nodePath.get('init');
-                    if (!init.isCallExpression()) {
-                        return;
-                    }
-                    var callee = init.get('callee');
-                    var arg = init.get('arguments')[0];
-                    if (isRequireAssert(callee, arg)) {
+                    if (isRequireAssert(nodePath.get('id'), nodePath.get('init'))) {
                         nodePath.remove();
                     }
                 }
@@ -88,9 +62,20 @@ module.exports = function (babel) {
     };
 };
 
-function isRequireAssert (callee, arg) {
+function isRequireAssert (id, init) {
+    if (!id.isIdentifier()) {
+        return false;
+    }
+    if (!id.equals('name', 'assert')) {
+        return false;
+    }
+    if (!init.isCallExpression()) {
+        return false;
+    }
+    var callee = init.get('callee');
     if (!callee.isIdentifier() || !callee.equals('name', 'require')) {
         return false;
     }
+    var arg = init.get('arguments')[0];
     return (arg.isLiteral() && (arg.equals('value', 'assert') || arg.equals('value', 'power-assert')));
 }
