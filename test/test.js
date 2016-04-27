@@ -31,6 +31,7 @@ describe('babel-plugin-unassert', function () {
     testTransform('es6module_powerassert');
     testTransform('assignment');
     testTransform('assignment_singlevar');
+    testTransform('es6module_namespece');
 });
 
 describe('babel-plugin-unassert with presets', function () {
@@ -43,4 +44,5 @@ describe('babel-plugin-unassert with presets', function () {
     testTransform('es6module_powerassert', opt);
     testTransform('assignment', opt);
     testTransform('assignment_singlevar', opt, 'presets-es2015');
+    testTransform('es6module_namespece', opt);
 });

@@ -38,7 +38,7 @@ module.exports = function (babel) {
                         return;
                     }
                     var firstSpecifier = nodePath.get('specifiers')[0];
-                    if (!firstSpecifier.isImportDefaultSpecifier()) {
+                    if (!(firstSpecifier.isImportDefaultSpecifier() || firstSpecifier.isImportNamespaceSpecifier())) {
                         return;
                     }
                     var local = firstSpecifier.get('local');
