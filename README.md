@@ -42,6 +42,28 @@ HOW TO USE
 ---------------------------------------
 
 
+### via [.babelrc](http://babeljs.io/docs/usage/babelrc/) (Recommended)
+
+```javascript
+{
+  "presets": [
+    ...
+  ],
+  "env": {
+    "production": {
+      "plugins": [
+        "babel-plugin-unassert"
+      ]
+    }
+  }
+}
+```
+
+```
+$ babel /path/to/src/target.js > /path/to/build/target.js
+```
+
+
 ### via [Babel CLI](http://babeljs.io/docs/usage/cli/)
 
 ```
@@ -65,28 +87,6 @@ var transformed = babel.transform(jsCode, {
     plugins: ['babel-plugin-unassert']
 });
 console.log(transformed.code);
-```
-
-
-### via [.babelrc](http://babeljs.io/docs/usage/babelrc/)
-
-```javascript
-{
-  "presets": [
-    ...
-  ],
-  "env": {
-    "production": {
-      "plugins": [
-        "babel-plugin-unassert"
-      ]
-    }
-  }
-}
-```
-
-```
-$ babel /path/to/src/target.js > /path/to/build/target.js
 ```
 
 
