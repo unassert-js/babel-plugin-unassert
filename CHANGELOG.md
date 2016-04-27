@@ -1,3 +1,11 @@
+## [2.1.0](https://github.com/twada/babel-plugin-unassert/releases/tag/v2.1.0) (2016-04-28)
+
+
+#### Features
+
+* [Support ImportNamespaceSpecifier](https://github.com/twada/babel-plugin-unassert/pull/4)
+
+
 ### [2.0.1](https://github.com/twada/babel-plugin-unassert/releases/tag/v2.0.1) (2016-01-09)
 
 
