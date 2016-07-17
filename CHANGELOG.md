@@ -1,3 +1,11 @@
+### [2.1.1](https://github.com/twada/babel-plugin-unassert/releases/tag/v2.1.1) (2016-07-18)
+
+
+#### Bug Fixes
+
+* [Replace assertion with EmptyStatement if it is not a grandchild of BlockStatement](https://github.com/twada/babel-plugin-unassert/pull/5)
+
+
 ## [2.1.0](https://github.com/twada/babel-plugin-unassert/releases/tag/v2.1.0) (2016-04-28)
 
 
