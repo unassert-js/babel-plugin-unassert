@@ -54,7 +54,15 @@ module.exports = function (babel) {
                         || callee.matchesPattern('assert', true)
                         || callee.matchesPattern('console.assert')
                        ) {
-                           nodePath.remove();
+                           if (nodePath.parentPath
+                               && nodePath.parentPath.isExpressionStatement()
+                               && nodePath.parentPath.parentPath) {
+                               if (nodePath.parentPath.parentPath.isBlockStatement()) {
+                                   nodePath.remove();
+                               } else {
+                                   nodePath.replaceWith(babel.types.emptyStatement());
+                               }
+                           }
                        }
                 }
             }
