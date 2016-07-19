@@ -38,6 +38,7 @@ describe('babel-plugin-unassert', function () {
 describe('babel-plugin-unassert with presets', function () {
     var opt = { presets: ['es2015'] };
     testTransform('func', opt);
+    testTransform('conditional', opt);
     testTransform('commonjs', opt);
     testTransform('commonjs_singlevar', opt);
     testTransform('es6module', opt);
