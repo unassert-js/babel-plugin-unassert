@@ -33,6 +33,7 @@ describe('babel-plugin-unassert', function () {
     testTransform('assignment');
     testTransform('assignment_singlevar');
     testTransform('es6module_namespece');
+    testTransform('not_an_expression_statement');
 });
 
 describe('babel-plugin-unassert with presets', function () {
@@ -47,4 +48,5 @@ describe('babel-plugin-unassert with presets', function () {
     testTransform('assignment', opt);
     testTransform('assignment_singlevar', opt, 'presets-es2015');
     testTransform('es6module_namespece', opt);
+    testTransform('not_an_expression_statement', opt);
 });
