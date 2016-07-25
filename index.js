@@ -54,6 +54,8 @@ module.exports = function (babel) {
                         || callee.matchesPattern('assert', true)
                         || callee.matchesPattern('console.assert')
                        ) {
+                           // TODO: this conditional could be removed since babel 6.11.4 has introduced a removal hook
+                           // https://github.com/babel/babel/releases/tag/v6.11.4
                            if (nodePath.parentPath
                                && nodePath.parentPath.isExpressionStatement()
                                && nodePath.parentPath.parentPath) {
