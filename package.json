@@ -23,6 +23,7 @@
   "homepage": "https://github.com/twada/babel-plugin-unassert",
   "keywords": [
     "DbC",
+    "unassert",
     "assert",
     "babel",
     "babel-plugin"
