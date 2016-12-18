@@ -13,11 +13,11 @@ babel-plugin-unassert removes assertions on build. So you can use assertions to 
 
 #### RELATED MODULES
 
-- [unassert](https://github.com/twada/unassert): Encourage reliable programming by writing assertions in production code, and compiling them away from release.
-- [unassertify](https://github.com/twada/unassertify): Browserify transform for unassert
-- [webpack-unassert-loader](https://github.com/zoncoen/webpack-unassert-loader): Webpack loader for unassert
-- [gulp-unassert](https://github.com/twada/gulp-unassert): Gulp plugin for unassert
-- [unassert-cli](https://github.com/twada/unassert-cli): CLI for unassert
+- [unassert](https://github.com/unassert-js/unassert): Encourage reliable programming by writing assertions in production code, and compiling them away from release.
+- [unassertify](https://github.com/unassert-js/unassertify): Browserify transform for unassert
+- [webpack-unassert-loader](https://github.com/unassert-js/webpack-unassert-loader): Webpack loader for unassert
+- [gulp-unassert](https://github.com/unassert-js/gulp-unassert): Gulp plugin for unassert
+- [unassert-cli](https://github.com/unassert-js/unassert-cli): CLI for unassert
 
 
 INSTALL
@@ -241,11 +241,11 @@ Licensed under the [MIT](http://twada.mit-license.org/2015-2016) license.
 [npm-url]: https://npmjs.org/package/babel-plugin-unassert
 [npm-image]: https://badge.fury.io/js/babel-plugin-unassert.svg
 
-[travis-url]: https://travis-ci.org/twada/babel-plugin-unassert
-[travis-image]: https://secure.travis-ci.org/twada/babel-plugin-unassert.svg?branch=master
+[travis-url]: https://travis-ci.org/unassert-js/babel-plugin-unassert
+[travis-image]: https://secure.travis-ci.org/unassert-js/babel-plugin-unassert.svg?branch=master
 
-[depstat-url]: https://gemnasium.com/twada/babel-plugin-unassert
-[depstat-image]: https://gemnasium.com/twada/babel-plugin-unassert.svg
+[depstat-url]: https://gemnasium.com/unassert-js/babel-plugin-unassert
+[depstat-image]: https://gemnasium.com/unassert-js/babel-plugin-unassert.svg
 
 [license-url]: http://twada.mit-license.org/2015-2016
 [license-image]: https://img.shields.io/badge/license-MIT-brightgreen.svg
