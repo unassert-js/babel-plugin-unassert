@@ -233,6 +233,16 @@ AUTHOR
 * [Takuto Wada](https://github.com/twada)
 
 
+OUR SUPPORT POLICY
+---------------------------------------
+
+We support Node under maintenance. In other words, we stop supporting old Node version when [their maintenance ends](https://github.com/nodejs/LTS).
+
+This means that any other environment is not supported.
+
+NOTE: If babel-plugin-unassert works in any of the unsupported environments, it is purely coincidental and has no bearing on future compatibility. Use at your own risk.
+
+
 LICENSE
 ---------------------------------------
 Licensed under the [MIT](https://github.com/unassert-js/babel-plugin-unassert/blob/master/LICENSE) license.
