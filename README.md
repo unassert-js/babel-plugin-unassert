@@ -235,7 +235,7 @@ AUTHOR
 
 LICENSE
 ---------------------------------------
-Licensed under the [MIT](http://twada.mit-license.org/2015-2016) license.
+Licensed under the [MIT](https://github.com/unassert-js/babel-plugin-unassert/blob/master/LICENSE) license.
 
 
 [npm-url]: https://npmjs.org/package/babel-plugin-unassert
@@ -247,5 +247,5 @@ Licensed under the [MIT](http://twada.mit-license.org/2015-2016) license.
 [depstat-url]: https://gemnasium.com/unassert-js/babel-plugin-unassert
 [depstat-image]: https://gemnasium.com/unassert-js/babel-plugin-unassert.svg
 
-[license-url]: http://twada.mit-license.org/2015-2016
+[license-url]: https://github.com/unassert-js/babel-plugin-unassert/blob/master/LICENSE
 [license-image]: https://img.shields.io/badge/license-MIT-brightgreen.svg
