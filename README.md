@@ -139,9 +139,9 @@ with [.babelrc](http://babeljs.io/docs/usage/babelrc/),
   ],
   "env": {
     "development": {
-      "plugins": [
-        "babel-plugin-espower"
-      ],
+      "presets": [
+        "babel-preset-power-assert"
+      ]
     },
     "production": {
       "plugins": [
@@ -155,7 +155,7 @@ with [.babelrc](http://babeljs.io/docs/usage/babelrc/),
 production code below
 
 ```javascript
-import assert from 'power-assert';
+import assert from 'assert';
 
 class Calc {
     add (a, b) {
