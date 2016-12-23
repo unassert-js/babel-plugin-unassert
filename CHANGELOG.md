@@ -1,3 +1,11 @@
+### [2.1.2](https://github.com/unassert-js/babel-plugin-unassert/releases/tag/v2.1.2) (2016-12-24)
+
+
+#### Chore
+
+* transfer to unassert-js organization ([b2a95e9](https://github.com/unassert-js/babel-plugin-unassert/commit/b2a95e9eba65a16a86924d53fd63aa4d2ab341ad))
+
+
 ### [2.1.1](https://github.com/unassert-js/babel-plugin-unassert/releases/tag/v2.1.1) (2016-07-18)
 
 
