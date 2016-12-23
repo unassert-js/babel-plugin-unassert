@@ -24,10 +24,10 @@
   "homepage": "https://github.com/unassert-js/babel-plugin-unassert",
   "keywords": [
     "DbC",
-    "unassert",
     "assert",
     "babel",
-    "babel-plugin"
+    "babel-plugin",
+    "unassert"
   ],
   "license": "MIT",
   "main": "index.js",
