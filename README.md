@@ -1,7 +1,9 @@
 babel-plugin-unassert
 ================================
 
-[Babel](http://babeljs.io/) plugin to encourage reliable programming by writing assertions in production code, and compiling them away from release.
+[Babel](http://babeljs.io/) plugin for unassert: Encourages [programming with assertions](https://en.wikipedia.org/wiki/Assertion_(software_development)) by providing tools to compile them away.
+
+[![unassert][unassert-banner]][unassert-url]
 
 [![Build Status][travis-image]][travis-url]
 [![NPM version][npm-image]][npm-url]
@@ -13,7 +15,7 @@ babel-plugin-unassert removes assertions on build. So you can use assertions to 
 
 #### RELATED MODULES
 
-- [unassert](https://github.com/unassert-js/unassert): Encourage reliable programming by writing assertions in production code, and compiling them away from release.
+- [unassert](https://github.com/unassert-js/unassert): Encourages programming with assertions by providing tools to compile them away.
 - [unassertify](https://github.com/unassert-js/unassertify): Browserify transform for unassert
 - [webpack-unassert-loader](https://github.com/unassert-js/webpack-unassert-loader): Webpack loader for unassert
 - [gulp-unassert](https://github.com/unassert-js/gulp-unassert): Gulp plugin for unassert
@@ -247,6 +249,9 @@ LICENSE
 ---------------------------------------
 Licensed under the [MIT](https://github.com/unassert-js/babel-plugin-unassert/blob/master/LICENSE) license.
 
+
+[unassert-url]: https://github.com/unassert-js/unassert
+[unassert-banner]: https://raw.githubusercontent.com/unassert-js/unassert-js-logo/master/banner/banner-official-fullcolor.png
 
 [npm-url]: https://npmjs.org/package/babel-plugin-unassert
 [npm-image]: https://badge.fury.io/js/babel-plugin-unassert.svg

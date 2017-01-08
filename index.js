@@ -1,7 +1,7 @@
 /**
  * babel-plugin-unassert
- *   Babel plugin to encourage reliable programming
- *   by writing assertions in production code, and compiling them away from release.
+ *   Babel plugin for unassert
+ *     Encourages programming with assertions by providing tools to compile them away.
  * 
  * https://github.com/unassert-js/babel-plugin-unassert
  *
