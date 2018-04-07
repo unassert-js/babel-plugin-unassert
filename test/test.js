@@ -23,7 +23,7 @@ function testTransform (fixtureName, extraOptions, extraSuffix) {
 }
 
 describe('babel-plugin-unassert', function () {
-    testTransform('func');
+    testTransform('node_assert_api');
     testTransform('conditional');
     testTransform('commonjs');
     testTransform('commonjs_singlevar');
@@ -38,7 +38,7 @@ describe('babel-plugin-unassert', function () {
 
 describe('babel-plugin-unassert with presets', function () {
     var opt = { presets: ['es2015'] };
-    testTransform('func', opt);
+    testTransform('node_assert_api', opt);
     testTransform('conditional', opt);
     testTransform('commonjs', opt);
     testTransform('commonjs_singlevar', opt);
