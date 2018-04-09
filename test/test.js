@@ -25,13 +25,13 @@ function testTransform (fixtureName, extraOptions, extraSuffix) {
 describe('babel-plugin-unassert', function () {
     testTransform('node_assert_api');
     testTransform('conditional');
-    testTransform('commonjs');
-    testTransform('commonjs_singlevar');
+    testTransform('cjs');
+    testTransform('cjs_singlevar');
+    testTransform('cjs_powerassert');
+    testTransform('cjs_assignment');
+    testTransform('cjs_assignment_singlevar');
     testTransform('es6module');
-    testTransform('commonjs_powerassert');
     testTransform('es6module_powerassert');
-    testTransform('assignment');
-    testTransform('assignment_singlevar');
     testTransform('es6module_namespece');
     testTransform('not_an_expression_statement');
 });
@@ -40,13 +40,13 @@ describe('babel-plugin-unassert with presets', function () {
     var opt = { presets: ['es2015'] };
     testTransform('node_assert_api', opt);
     testTransform('conditional', opt);
-    testTransform('commonjs', opt);
-    testTransform('commonjs_singlevar', opt);
+    testTransform('cjs', opt);
+    testTransform('cjs_singlevar', opt);
+    testTransform('cjs_powerassert', opt);
+    testTransform('cjs_assignment', opt);
+    testTransform('cjs_assignment_singlevar', opt, 'presets-es2015');
     testTransform('es6module', opt);
-    testTransform('commonjs_powerassert', opt);
     testTransform('es6module_powerassert', opt);
-    testTransform('assignment', opt);
-    testTransform('assignment_singlevar', opt, 'presets-es2015');
     testTransform('es6module_namespece', opt);
     testTransform('not_an_expression_statement', opt);
 });
