@@ -1,6 +1,4 @@
-'use strict';
-
-import assert from 'assert';
+import * as assert from 'assert';
 
 function add (a, b) {
     assert(!isNaN(a));

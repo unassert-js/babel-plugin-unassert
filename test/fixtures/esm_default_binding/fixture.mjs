@@ -1,6 +1,4 @@
-'use strict';
-
-import assert from 'power-assert';
+import assert from 'assert';
 
 function add (a, b) {
     assert(!isNaN(a));

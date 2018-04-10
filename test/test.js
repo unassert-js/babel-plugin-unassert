@@ -8,14 +8,16 @@ var path = require('path');
 var babel = require('babel-core');
 var extend = require('xtend');
 
-function testTransform (fixtureName, extraOptions, extraSuffix) {
+function testTransform (fixtureName, options) {
     it(fixtureName, function () {
-        var suffix = extraSuffix ? '-' + extraSuffix : '';
-        var fixtureFilepath = path.resolve(__dirname, 'fixtures', fixtureName, 'fixture.js');
-        var expectedFilepath = path.resolve(__dirname, 'fixtures', fixtureName, 'expected' + suffix + '.js');
+        options = options || {};
+        var suffix = options.suffix || 'js';
+        var dialect = options.dialect ? '-presets-' + options.dialect : '';
+        var fixtureFilepath = path.resolve(__dirname, 'fixtures', fixtureName, 'fixture' + '.' + suffix);
+        var expectedFilepath = path.resolve(__dirname, 'fixtures', fixtureName, 'expected' + dialect + '.' + suffix);
         var result = babel.transformFileSync(fixtureFilepath, extend({
             plugins: [ unassert ]
-        }, extraOptions));
+        }, options.babelOptions));
         var actual = result.code;
         var expected = fs.readFileSync(expectedFilepath).toString();
         assert.equal(actual + '\n', expected);
@@ -30,23 +32,23 @@ describe('babel-plugin-unassert', function () {
     testTransform('cjs_powerassert');
     testTransform('cjs_assignment');
     testTransform('cjs_assignment_singlevar');
-    testTransform('es6module');
-    testTransform('es6module_powerassert');
-    testTransform('es6module_namespece');
+    testTransform('esm_default_binding', { suffix: 'mjs' });
+    testTransform('esm_default_binding_powerassert', { suffix: 'mjs' });
+    testTransform('esm_namespace_import', { suffix: 'mjs' });
     testTransform('not_an_expression_statement');
 });
 
 describe('babel-plugin-unassert with presets', function () {
-    var opt = { presets: ['es2015'] };
+    var opt = { babelOptions: { presets: ['es2015'] }};
     testTransform('node_assert_api', opt);
     testTransform('conditional', opt);
     testTransform('cjs', opt);
     testTransform('cjs_singlevar', opt);
     testTransform('cjs_powerassert', opt);
     testTransform('cjs_assignment', opt);
-    testTransform('cjs_assignment_singlevar', opt, 'presets-es2015');
-    testTransform('es6module', opt);
-    testTransform('es6module_powerassert', opt);
-    testTransform('es6module_namespece', opt);
+    testTransform('cjs_assignment_singlevar', extend(opt, { dialect: 'es2015' }));
+    testTransform('esm_default_binding', extend(opt, { dialect: 'es2015', suffix: 'mjs' }));
+    testTransform('esm_default_binding_powerassert', extend(opt, { dialect: 'es2015', suffix: 'mjs' }));
+    testTransform('esm_namespace_import', extend(opt, { dialect: 'es2015', suffix: 'mjs' }));
     testTransform('not_an_expression_statement', opt);
 });
