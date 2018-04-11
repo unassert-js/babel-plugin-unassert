@@ -11,11 +11,13 @@ var extend = require('xtend');
 function testTransform (fixtureName, options) {
     it(fixtureName, function () {
         options = options || {};
-        var suffix = options.suffix || 'js';
+        var sourceType = options.sourceType || 'script';
+        var suffix = sourceType === 'module' ? 'mjs' : 'js';
         var dialect = options.dialect ? '-presets-' + options.dialect : '';
         var fixtureFilepath = path.resolve(__dirname, 'fixtures', fixtureName, 'fixture' + '.' + suffix);
         var expectedFilepath = path.resolve(__dirname, 'fixtures', fixtureName, 'expected' + dialect + '.' + suffix);
         var result = babel.transformFileSync(fixtureFilepath, extend({
+            sourceType: sourceType,
             plugins: [ unassert ]
         }, options.babelOptions));
         var actual = result.code;
@@ -32,9 +34,9 @@ describe('babel-plugin-unassert', function () {
     testTransform('cjs_powerassert');
     testTransform('cjs_assignment');
     testTransform('cjs_assignment_singlevar');
-    testTransform('esm_default_binding', { suffix: 'mjs' });
-    testTransform('esm_default_binding_powerassert', { suffix: 'mjs' });
-    testTransform('esm_namespace_import', { suffix: 'mjs' });
+    testTransform('esm_default_binding', { sourceType: 'module' });
+    testTransform('esm_default_binding_powerassert', { sourceType: 'module' });
+    testTransform('esm_namespace_import', { sourceType: 'module' });
     testTransform('not_an_expression_statement');
 });
 
@@ -47,8 +49,8 @@ describe('babel-plugin-unassert with presets', function () {
     testTransform('cjs_powerassert', opt);
     testTransform('cjs_assignment', opt);
     testTransform('cjs_assignment_singlevar', extend(opt, { dialect: 'es2015' }));
-    testTransform('esm_default_binding', extend(opt, { dialect: 'es2015', suffix: 'mjs' }));
-    testTransform('esm_default_binding_powerassert', extend(opt, { dialect: 'es2015', suffix: 'mjs' }));
-    testTransform('esm_namespace_import', extend(opt, { dialect: 'es2015', suffix: 'mjs' }));
+    testTransform('esm_default_binding', extend(opt, { dialect: 'es2015', sourceType: 'module' }));
+    testTransform('esm_default_binding_powerassert', extend(opt, { dialect: 'es2015', sourceType: 'module' }));
+    testTransform('esm_namespace_import', extend(opt, { dialect: 'es2015', sourceType: 'module' }));
     testTransform('not_an_expression_statement', opt);
 });
