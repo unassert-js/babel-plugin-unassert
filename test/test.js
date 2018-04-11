@@ -12,10 +12,10 @@ function testTransform (fixtureName, options) {
     it(fixtureName, function () {
         options = options || {};
         var sourceType = options.sourceType || 'script';
-        var suffix = sourceType === 'module' ? 'mjs' : 'js';
+        var extension = sourceType === 'module' ? 'mjs' : 'js';
         var dialect = options.dialect ? '-presets-' + options.dialect : '';
-        var fixtureFilepath = path.resolve(__dirname, 'fixtures', fixtureName, 'fixture' + '.' + suffix);
-        var expectedFilepath = path.resolve(__dirname, 'fixtures', fixtureName, 'expected' + dialect + '.' + suffix);
+        var fixtureFilepath = path.resolve(__dirname, 'fixtures', fixtureName, 'fixture' + '.' + extension);
+        var expectedFilepath = path.resolve(__dirname, 'fixtures', fixtureName, 'expected' + dialect + '.' + extension);
         var result = babel.transformFileSync(fixtureFilepath, extend({
             sourceType: sourceType,
             plugins: [ unassert ]
