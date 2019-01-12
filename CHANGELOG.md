@@ -1,3 +1,11 @@
+## [2.2.0](https://github.com/unassert-js/babel-plugin-unassert/releases/tag/v2.2.0) (2019-01-12)
+
+
+#### Features
+
+* [Support "Strict mode"](https://github.com/unassert-js/babel-plugin-unassert/pull/7)
+
+
 ### [2.1.2](https://github.com/unassert-js/babel-plugin-unassert/releases/tag/v2.1.2) (2016-12-24)
 
 
