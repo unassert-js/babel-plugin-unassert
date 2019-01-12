@@ -1,7 +1,7 @@
 'use strict';
 
 function add(a, b) {
-  if (!isNaN(a)) void 0;
+  if (!isNaN(a)) {}
 
   if (typeof b === 'number') {}
 
