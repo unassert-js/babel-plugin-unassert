@@ -1,31 +1,31 @@
 'use strict';
 
 delete require.cache[require.resolve('..')];
-var unassert = require('..');
-var assert = require('assert');
-var fs = require('fs');
-var path = require('path');
-var babel = require('@babel/core');
+const unassert = require('..');
+const assert = require('assert');
+const fs = require('fs');
+const path = require('path');
+const babel = require('@babel/core');
 
-function testTransform (fixtureName, options) {
-  it(fixtureName, function () {
+const testTransform = (fixtureName, options) => {
+  it(fixtureName, () => {
     options = options || {};
-    var sourceType = options.sourceType || 'script';
-    var extension = sourceType === 'module' ? 'mjs' : 'js';
-    var dialect = options.dialect ? '-presets-' + options.dialect : '';
-    var fixtureFilepath = path.resolve(__dirname, 'fixtures', fixtureName, 'fixture' + '.' + extension);
-    var expectedFilepath = path.resolve(__dirname, 'fixtures', fixtureName, 'expected' + dialect + '.' + extension);
-    var result = babel.transformFileSync(fixtureFilepath, Object.assign({
+    const sourceType = options.sourceType || 'script';
+    const extension = sourceType === 'module' ? 'mjs' : 'js';
+    const dialect = options.dialect ? `-presets-${options.dialect}` : '';
+    const fixtureFilepath = path.resolve(__dirname, 'fixtures', fixtureName, `fixture.${extension}`);
+    const expectedFilepath = path.resolve(__dirname, 'fixtures', fixtureName, `expected${dialect}.${extension}`);
+    const result = babel.transformFileSync(fixtureFilepath, Object.assign({
       sourceType: sourceType,
       plugins: [ unassert ]
     }, options.babelOptions));
-    var actual = result.code;
-    var expected = fs.readFileSync(expectedFilepath).toString();
+    const actual = result.code;
+    const expected = fs.readFileSync(expectedFilepath).toString();
     assert.strictEqual(actual + '\n', expected);
   });
-}
+};
 
-describe('babel-plugin-unassert', function () {
+describe('babel-plugin-unassert', () => {
   testTransform('node_assert_api');
   testTransform('conditional');
   testTransform('cjs');
@@ -43,8 +43,8 @@ describe('babel-plugin-unassert', function () {
   testTransform('not_an_expression_statement');
 });
 
-describe('babel-plugin-unassert with presets', function () {
-  var opt = { babelOptions: { presets: ['@babel/env'] } };
+describe('babel-plugin-unassert with presets', () => {
+  const opt = { babelOptions: { presets: ['@babel/env'] } };
   testTransform('node_assert_api', opt);
   testTransform('conditional', opt);
   testTransform('cjs', opt);

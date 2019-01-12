@@ -11,64 +11,7 @@
  */
 'use strict';
 
-module.exports = function (babel) {
-  return {
-    visitor: {
-      AssignmentExpression: {
-        enter: function (nodePath, pluginPass) {
-          if (!nodePath.equals('operator', '=')) {
-            return;
-          }
-          if (isRemovalTarget(nodePath.get('left'), nodePath.get('right'))) {
-            nodePath.remove();
-          }
-        }
-      },
-      VariableDeclarator: {
-        enter: function (nodePath, pluginPass) {
-          if (isRemovalTarget(nodePath.get('id'), nodePath.get('init'))) {
-            nodePath.remove();
-          }
-        }
-      },
-      ImportDeclaration: {
-        enter: function (nodePath, pluginPass) {
-          var source = nodePath.get('source');
-          if (!(source.equals('value', 'assert') || source.equals('value', 'power-assert'))) {
-            return;
-          }
-          var firstSpecifier = nodePath.get('specifiers')[0];
-          if (!(firstSpecifier.isImportDefaultSpecifier() || firstSpecifier.isImportNamespaceSpecifier())) {
-            return;
-          }
-          var local = firstSpecifier.get('local');
-          if (local.equals('name', 'assert')) {
-            nodePath.remove();
-          }
-        }
-      },
-      CallExpression: {
-        enter: function (nodePath, pluginPass) {
-          var callee = nodePath.get('callee');
-          if ((callee.isIdentifier() && callee.equals('name', 'assert')) ||
-                        callee.matchesPattern('assert', true) ||
-                        callee.matchesPattern('console.assert')
-          ) {
-            if (nodePath.parentPath && nodePath.parentPath.isExpressionStatement()) {
-              nodePath.remove();
-            }
-          }
-        }
-      }
-    }
-  };
-};
-
-function isRemovalTarget (id, init) {
-  return isRequireAssert(id, init) || isRequireAssertStrict(id, init);
-}
-
-function isRequireAssert (id, init) {
+const isRequireAssert = (id, init) => {
   if (!id.isIdentifier()) {
     return false;
   }
@@ -78,24 +21,70 @@ function isRequireAssert (id, init) {
   if (!init.isCallExpression()) {
     return false;
   }
-  var callee = init.get('callee');
+  const callee = init.get('callee');
   if (!callee.isIdentifier() || !callee.equals('name', 'require')) {
     return false;
   }
-  var arg = init.get('arguments')[0];
+  const arg = init.get('arguments')[0];
   return (arg.isLiteral() && (arg.equals('value', 'assert') || arg.equals('value', 'power-assert')));
-}
+};
 
-function isRequireAssertStrict (id, init) {
+const isRequireAssertStrict = (id, init) => {
   if (!init.isMemberExpression()) {
     return false;
   }
   if (!isRequireAssert(id, init.get('object'))) {
     return false;
   }
-  var prop = init.get('property');
+  const prop = init.get('property');
   if (!prop.isIdentifier()) {
     return false;
   }
   return prop.equals('name', 'strict');
-}
+};
+
+const isRemovalTarget = (id, init) => isRequireAssert(id, init) || isRequireAssertStrict(id, init);
+
+module.exports = (babel) => {
+  return {
+    visitor: {
+      AssignmentExpression (nodePath, pluginPass) {
+        if (!nodePath.equals('operator', '=')) {
+          return;
+        }
+        if (isRemovalTarget(nodePath.get('left'), nodePath.get('right'))) {
+          nodePath.remove();
+        }
+      },
+      VariableDeclarator (nodePath, pluginPass) {
+        if (isRemovalTarget(nodePath.get('id'), nodePath.get('init'))) {
+          nodePath.remove();
+        }
+      },
+      ImportDeclaration (nodePath, pluginPass) {
+        const source = nodePath.get('source');
+        if (!(source.equals('value', 'assert') || source.equals('value', 'power-assert'))) {
+          return;
+        }
+        const firstSpecifier = nodePath.get('specifiers')[0];
+        if (!(firstSpecifier.isImportDefaultSpecifier() || firstSpecifier.isImportNamespaceSpecifier())) {
+          return;
+        }
+        const local = firstSpecifier.get('local');
+        if (local.equals('name', 'assert')) {
+          nodePath.remove();
+        }
+      },
+      CallExpression (nodePath, pluginPass) {
+        const callee = nodePath.get('callee');
+        if ((callee.isIdentifier() && callee.equals('name', 'assert')) ||
+              callee.matchesPattern('assert', true) ||
+              callee.matchesPattern('console.assert')) {
+          if (nodePath.parentPath && nodePath.parentPath.isExpressionStatement()) {
+            nodePath.remove();
+          }
+        }
+      }
+    }
+  };
+};
