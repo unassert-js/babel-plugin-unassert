@@ -11,7 +11,9 @@
   "devDependencies": {
     "@babel/core": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
-    "mocha": "^5.0.0"
+    "mocha": "^5.0.0",
+    "semistandard": "^13.0.0",
+    "snazzy": "^8.0.0"
   },
   "files": [
     "README.md",
@@ -35,6 +37,17 @@
     "url": "https://github.com/unassert-js/babel-plugin-unassert.git"
   },
   "scripts": {
+    "lint": "semistandard --verbose index.js test/test.js | snazzy",
+    "fmt": "semistandard --fix index.js test/test.js",
     "test": "mocha --timeout 0"
+  },
+  "semistandard": {
+    "ignore": [
+    ],
+    "globals": [
+      "describe",
+      "beforeEach",
+      "it"
+    ]
   }
 }
