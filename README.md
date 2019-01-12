@@ -7,7 +7,7 @@ babel-plugin-unassert
 
 [![Build Status][travis-image]][travis-url]
 [![NPM version][npm-image]][npm-url]
-[![Dependency Status][depstat-image]][depstat-url]
+[![Code Style][style-image]][style-url]
 [![License][license-image]][license-url]
 
 babel-plugin-unassert removes assertions on build. So you can use assertions to declare preconditions, postconditions and invariants.
@@ -263,8 +263,8 @@ Licensed under the [MIT](https://github.com/unassert-js/babel-plugin-unassert/bl
 [travis-url]: https://travis-ci.org/unassert-js/babel-plugin-unassert
 [travis-image]: https://secure.travis-ci.org/unassert-js/babel-plugin-unassert.svg?branch=master
 
-[depstat-url]: https://gemnasium.com/unassert-js/babel-plugin-unassert
-[depstat-image]: https://gemnasium.com/unassert-js/babel-plugin-unassert.svg
+[style-url]: https://github.com/Flet/semistandard
+[style-image]: https://img.shields.io/badge/code%20style-semistandard-brightgreen.svg
 
 [license-url]: https://github.com/unassert-js/babel-plugin-unassert/blob/master/LICENSE
 [license-image]: https://img.shields.io/badge/license-MIT-brightgreen.svg

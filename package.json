@@ -37,8 +37,8 @@
     "url": "https://github.com/unassert-js/babel-plugin-unassert.git"
   },
   "scripts": {
-    "lint": "semistandard --verbose index.js test/test.js | snazzy",
-    "fmt": "semistandard --fix index.js test/test.js",
+    "lint": "semistandard --verbose index.js test | snazzy",
+    "fmt": "semistandard --fix index.js test",
     "test": "mocha --timeout 0"
   },
   "semistandard": {
