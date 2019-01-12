@@ -19,14 +19,14 @@ module.exports = function (babel) {
                     if (!nodePath.equals('operator', '=')) {
                         return;
                     }
-                    if (isRequireAssert(nodePath.get('left'), nodePath.get('right'))) {
+                    if (isRemovalTarget(nodePath.get('left'), nodePath.get('right'))) {
                         nodePath.remove();
                     }
                 }
             },
             VariableDeclarator: {
                 enter: function (nodePath, pluginPass) {
-                    if (isRequireAssert(nodePath.get('id'), nodePath.get('init'))) {
+                    if (isRemovalTarget(nodePath.get('id'), nodePath.get('init'))) {
                         nodePath.remove();
                     }
                 }
@@ -72,6 +72,10 @@ module.exports = function (babel) {
     };
 };
 
+function isRemovalTarget (id, init) {
+    return isRequireAssert(id, init) || isRequireAssertStrict(id, init);
+}
+
 function isRequireAssert (id, init) {
     if (!id.isIdentifier()) {
         return false;
@@ -88,4 +92,18 @@ function isRequireAssert (id, init) {
     }
     var arg = init.get('arguments')[0];
     return (arg.isLiteral() && (arg.equals('value', 'assert') || arg.equals('value', 'power-assert')));
+}
+
+function isRequireAssertStrict (id, init) {
+    if (!init.isMemberExpression()) {
+        return false;
+    }
+    if (!isRequireAssert(id, init.get('object'))) {
+        return false;
+    }
+    var prop = init.get('property');
+    if (!prop.isIdentifier()) {
+        return false;
+    }
+    return prop.equals('name', 'strict');
 }

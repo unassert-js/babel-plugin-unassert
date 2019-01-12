@@ -220,14 +220,18 @@ Assertion expressions are removed when they match patterns below. In other words
 babel-plugin-unassert also removes assert variable declarations,
 
 * `var assert = require("assert")`
+* `var assert = require("assert").strict`
 * `var assert = require("power-assert")`
+* `var assert = require("power-assert").strict`
 * `import assert from "assert"`
 * `import assert from "power-assert"`
 
 and assignments.
 
 * `assert = require("assert")`
+* `assert = require("assert").strict`
 * `assert = require("power-assert")`
+* `assert = require("power-assert").strict`
 
 
 AUTHOR
