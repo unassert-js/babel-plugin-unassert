@@ -5,8 +5,7 @@ var unassert = require('..');
 var assert = require('assert');
 var fs = require('fs');
 var path = require('path');
-var babel = require('babel-core');
-var extend = require('xtend');
+var babel = require('@babel/core');
 
 function testTransform (fixtureName, options) {
     it(fixtureName, function () {
@@ -16,7 +15,7 @@ function testTransform (fixtureName, options) {
         var dialect = options.dialect ? '-presets-' + options.dialect : '';
         var fixtureFilepath = path.resolve(__dirname, 'fixtures', fixtureName, 'fixture' + '.' + extension);
         var expectedFilepath = path.resolve(__dirname, 'fixtures', fixtureName, 'expected' + dialect + '.' + extension);
-        var result = babel.transformFileSync(fixtureFilepath, extend({
+        var result = babel.transformFileSync(fixtureFilepath, Object.assign({
             sourceType: sourceType,
             plugins: [ unassert ]
         }, options.babelOptions));
@@ -45,7 +44,7 @@ describe('babel-plugin-unassert', function () {
 });
 
 describe('babel-plugin-unassert with presets', function () {
-    var opt = { babelOptions: { presets: ['es2015'] }};
+    var opt = { babelOptions: { presets: ['@babel/env'] }};
     testTransform('node_assert_api', opt);
     testTransform('conditional', opt);
     testTransform('cjs', opt);
@@ -55,10 +54,10 @@ describe('babel-plugin-unassert with presets', function () {
     testTransform('cjs_powerassert', opt);
     testTransform('cjs_powerassert_strictmode', opt);
     testTransform('cjs_assignment', opt);
-    testTransform('cjs_assignment_singlevar', extend(opt, { dialect: 'es2015' }));
-    testTransform('cjs_assignment_strictmode', extend(opt, { dialect: 'es2015' }));
-    testTransform('esm_default_binding', extend(opt, { dialect: 'es2015', sourceType: 'module' }));
-    testTransform('esm_default_binding_powerassert', extend(opt, { dialect: 'es2015', sourceType: 'module' }));
-    testTransform('esm_namespace_import', extend(opt, { dialect: 'es2015', sourceType: 'module' }));
+    testTransform('cjs_assignment_singlevar', Object.assign({}, opt, { dialect: 'env' }));
+    testTransform('cjs_assignment_strictmode', Object.assign({}, opt, { dialect: 'env' }));
+    testTransform('esm_default_binding', Object.assign({}, opt, { dialect: 'env', sourceType: 'module' }));
+    testTransform('esm_default_binding_powerassert', Object.assign({}, opt, { dialect: 'env', sourceType: 'module' }));
+    testTransform('esm_namespace_import', Object.assign({}, opt, { dialect: 'env', sourceType: 'module' }));
     testTransform('not_an_expression_statement', opt);
 });

@@ -1,12 +1,13 @@
 'use strict';
 
 function add(a, b) {
-    if (assert(a)) {
-        return null;
-    }
+  if (assert(a)) {
+    return null;
+  }
 
-    if (!assert(b)) {
-        return null;
-    }
-    return a + b;
+  if (!assert(b)) {
+    return null;
+  }
+
+  return a + b;
 }
