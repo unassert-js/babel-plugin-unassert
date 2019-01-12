@@ -1,7 +1,7 @@
 babel-plugin-unassert
 ================================
 
-[Babel](http://babeljs.io/) plugin for unassert: Encourages [programming with assertions](https://en.wikipedia.org/wiki/Assertion_(software_development)) by providing tools to compile them away.
+[Babel](https://babeljs.io/) plugin for unassert: Encourages [programming with assertions](https://en.wikipedia.org/wiki/Assertion_(software_development)) by providing tools to compile them away.
 
 [![unassert][unassert-banner]][unassert-url]
 
@@ -33,10 +33,18 @@ $ npm install --save-dev babel-plugin-unassert
 CAUTION
 ---------------------------------------
 
-For Babel 5 or lower, you need to use the 1.2.x release of babel-plugin-unassert.
+Babel7 is incompatible with Babel6. Babel6 is incompatible with Babel5.
+
+For Babel6, you need to use 2.x release of babel-plugin-unassert.
 
 ```
-$ npm install --save-dev babel-plugin-unassert@1.2.0
+$ npm install --save-dev babel-plugin-unassert@2
+```
+
+For Babel 5 or lower, you need to use the 1.x release of babel-plugin-unassert.
+
+```
+$ npm install --save-dev babel-plugin-unassert@1
 ```
 
 
@@ -44,21 +52,17 @@ HOW TO USE
 ---------------------------------------
 
 
-### via [.babelrc](http://babeljs.io/docs/usage/babelrc/) (Recommended)
+### via [.babelrc.js](https://babeljs.io/docs/en/configuration#babelrcjs)
 
 ```javascript
-{
-  "presets": [
-    ...
-  ],
-  "env": {
-    "production": {
-      "plugins": [
-        "babel-plugin-unassert"
-      ]
-    }
-  }
+const presets = ['@babel/env'];
+const plugins = [];
+
+if (process.env.NODE_ENV === 'production') {
+  plugins.push('babel-plugin-unassert');
 }
+
+module.exports = { presets, plugins };
 ```
 
 ```
@@ -66,27 +70,20 @@ $ babel /path/to/src/target.js > /path/to/build/target.js
 ```
 
 
-### via [Babel CLI](http://babeljs.io/docs/usage/cli/)
+### via [@babel/cli](https://babeljs.io/docs/en/babel-cli)
 
 ```
 $ babel --plugins babel-plugin-unassert /path/to/src/target.js > /path/to/build/target.js
 ```
 
-or shortly,
 
-```
-$ babel --plugins unassert /path/to/src/target.js > /path/to/build/target.js
-```
-
-
-### via [Babel API](http://babeljs.io/docs/usage/api/)
+### via [@babel/core](https://babeljs.io/docs/en/babel-core/)
 
 ```javascript
-var babel = require('babel-core');
-var jsCode = fs.readFileSync('/path/to/src/target.js');
-var transformed = babel.transform(jsCode, {
-    presets: [...],
-    plugins: ['babel-plugin-unassert']
+const babel = require('@babel/core');
+const transformed = babel.transformFileSync('/path/to/src/target.js', {
+  presets: ['@babel/env'],
+  plugins: ['babel-plugin-unassert']
 });
 console.log(transformed.code);
 ```
@@ -100,21 +97,21 @@ For given `math.js` below,
 ```javascript
 'use strict';
 
-var assert = require('assert');
+const assert = require('assert');
 
 function add (a, b) {
-    console.assert(typeof a === 'number');
-    assert(!isNaN(a));
-    assert.equal(typeof b, 'number');
-    assert.ok(!isNaN(b));
-    return a + b;
+  console.assert(typeof a === 'number');
+  assert(!isNaN(a));
+  assert.equal(typeof b, 'number');
+  assert.ok(!isNaN(b));
+  return a + b;
 }
 ```
 
-Run `babel` with `--plugins unassert` to transform code.
+Run `babel-cli` with `--plugins babel-plugin-unassert` option to transform.
 
 ```
-$ babel --plugins unassert /path/to/demo/math.js > /path/to/build/math.js
+$ babel --plugins babel-plugin-unassert /path/to/demo/math.js > /path/to/build/math.js
 ```
 
 You will see assert calls and declarations disappear.
@@ -123,7 +120,7 @@ You will see assert calls and declarations disappear.
 'use strict';
 
 function add(a, b) {
-    return a + b;
+  return a + b;
 }
 ```
 
@@ -132,56 +129,56 @@ function add(a, b) {
 
 babel-plugin-unassert supports ES6 module syntax and [power-assert](https://github.com/power-assert-js/power-assert).
 
-with [.babelrc](http://babeljs.io/docs/usage/babelrc/),
+For given [babel.config.js](https://babeljs.io/docs/en/configuration#babelconfigjs),
 
 ```javascript
-{
-  "presets": [
-    ...
-  ],
-  "env": {
-    "development": {
-      "presets": [
-        "babel-preset-power-assert"
-      ]
-    },
-    "production": {
-      "plugins": [
-        "babel-plugin-unassert"
-      ]
-    }
+module.exports = function (api) {
+  const presets = ['@babel/env'];
+  const plugins = [];
+
+  if (api.env(['development', 'test'])) {
+    presets.push('babel-preset-power-assert');
   }
-}
+
+  if (api.env('production')) {
+    plugins.push('babel-plugin-unassert');
+  }
+
+  return {
+    presets,
+    plugins
+  };
+};
 ```
 
-production code below
+and production code below,
 
 ```javascript
 import assert from 'assert';
 
 class Calc {
-    add (a, b) {
-        assert(!(isNaN(a) || isNaN(b)));
-        assert(typeof a === 'number');
-        assert(typeof b === 'number');
-        return a + b;
-    }
+  add (a, b) {
+    assert(!(isNaN(a) || isNaN(b)));
+    assert(typeof a === 'number');
+    assert(typeof b === 'number');
+    return a + b;
+  }
 }
 ```
 
-becomes
+then it becomes in production,
 
 ```javascript
 'use strict';
 
 class Calc {
-    add(a, b) {
-        return a + b;
-    }
+  add(a, b) {
+    return a + b;
+  }
 }
 ```
 
-in production, and produces power-assert messages like
+and in development, produces power-assert messages like below
 
 ```
 AssertionError:   # example.js:5
@@ -192,8 +189,6 @@ AssertionError:   # example.js:5
          | false 3  true
          false
 ```
-
-in development.
 
 
 SUPPORTED PATTERNS
@@ -217,12 +212,12 @@ Assertion expressions are removed when they match patterns below. In other words
 * `assert.ifError(value)`
 * `console.assert(value, [message])`
 
-babel-plugin-unassert also removes assert variable declarations,
+babel-plugin-unassert also removes assert variable declarations such as,
 
-* `var assert = require("assert")`
-* `var assert = require("assert").strict`
-* `var assert = require("power-assert")`
-* `var assert = require("power-assert").strict`
+* `const assert = require("assert")`
+* `const assert = require("assert").strict`
+* `const assert = require("power-assert")`
+* `const assert = require("power-assert").strict`
 * `import assert from "assert"`
 * `import assert from "power-assert"`
 
