@@ -35,7 +35,7 @@ CAUTION
 
 Babel7 is incompatible with Babel6. Babel6 is incompatible with Babel5.
 
-For Babel6, you need to use 2.x release of babel-plugin-unassert.
+For Babel6, you need to use [the 2.x release of babel-plugin-unassert](https://github.com/unassert-js/babel-plugin-unassert/tree/2.x).
 
 ```
 $ npm install --save-dev babel-plugin-unassert@2
