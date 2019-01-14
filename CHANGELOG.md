@@ -1,3 +1,22 @@
+## [3.0.0](https://github.com/unassert-js/babel-plugin-unassert/releases/tag/v3.0.0) (2019-01-15)
+
+
+#### Features
+
+* Babel7 support
+
+
+#### Breaking Changes
+
+* Babel7 is incompatible with Babel6
+
+For Babel6, you need to use [the 2.x release of babel-plugin-unassert](https://github.com/unassert-js/babel-plugin-unassert/tree/2.x).
+
+```
+$ npm install --save-dev babel-plugin-unassert@2
+```
+
+
 ## [2.2.0](https://github.com/unassert-js/babel-plugin-unassert/releases/tag/v2.2.0) (2019-01-12)
 
 
