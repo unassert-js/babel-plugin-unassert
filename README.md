@@ -206,9 +206,12 @@ Assertion expressions are removed when they match patterns below. In other words
 * `assert.notDeepEqual(actual, expected, [message])`
 * `assert.deepStrictEqual(actual, expected, [message])`
 * `assert.notDeepStrictEqual(actual, expected, [message])`
+* `assert.fail([message])`
 * `assert.fail(actual, expected, message, operator)`
 * `assert.throws(block, [error], [message])`
 * `assert.doesNotThrow(block, [message])`
+* `assert.rejects(asyncFn, [error], [message])`
+* `assert.doesNotReject(asyncFn, [error], [message])`
 * `assert.ifError(value)`
 * `console.assert(value, [message])`
 
