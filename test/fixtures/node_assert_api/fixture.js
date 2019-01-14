@@ -52,5 +52,9 @@ function add (a, b) {
 
     assert.ifError(a);
     assert.fail(a, b, 'assertion message', '==');
+
+    assert.fail('message');
+    assert.doesNotReject(asyncFn, error, message);
+    assert.rejects(asyncFn, error, message);
     return a + b;
 }
