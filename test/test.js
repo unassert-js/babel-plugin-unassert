@@ -27,7 +27,7 @@ const testTransform = (fixtureName, options) => {
 
 describe('babel-plugin-unassert', () => {
   testTransform('node_assert_api');
-  testTransform('conditional');
+  testTransform('non_block_statement');
   testTransform('cjs');
   testTransform('cjs_strictmode');
   testTransform('cjs_singlevar');
@@ -46,7 +46,7 @@ describe('babel-plugin-unassert', () => {
 describe('babel-plugin-unassert with presets', () => {
   const opt = { babelOptions: { presets: ['@babel/env'] } };
   testTransform('node_assert_api', opt);
-  testTransform('conditional', opt);
+  testTransform('non_block_statement', opt);
   testTransform('cjs', opt);
   testTransform('cjs_strictmode', opt);
   testTransform('cjs_singlevar', opt);
