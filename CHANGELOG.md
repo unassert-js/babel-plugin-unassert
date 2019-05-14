@@ -1,3 +1,11 @@
+### [3.0.1](https://github.com/unassert-js/babel-plugin-unassert/releases/tag/v3.0.1) (2019-05-14)
+
+
+#### Bug Fixes
+
+* [dealing with ESM import with ImportSpecifier](https://github.com/unassert-js/babel-plugin-unassert/pull/10) (Thanks [@fschopp](https://github.com/fschopp) for reporting and suggestion)
+
+
 ## [3.0.0](https://github.com/unassert-js/babel-plugin-unassert/releases/tag/v3.0.0) (2019-01-15)
 
 
