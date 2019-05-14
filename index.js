@@ -67,7 +67,7 @@ module.exports = (babel) => {
           return;
         }
         const firstSpecifier = nodePath.get('specifiers')[0];
-        if (!(firstSpecifier.isImportDefaultSpecifier() || firstSpecifier.isImportNamespaceSpecifier())) {
+        if (!(firstSpecifier.isImportDefaultSpecifier() || firstSpecifier.isImportNamespaceSpecifier() || firstSpecifier.isImportSpecifier())) {
           return;
         }
         const local = firstSpecifier.get('local');
