@@ -40,6 +40,7 @@ describe('babel-plugin-unassert', () => {
   testTransform('esm_default_binding', { sourceType: 'module' });
   testTransform('esm_default_binding_powerassert', { sourceType: 'module' });
   testTransform('esm_namespace_import', { sourceType: 'module' });
+  testTransform('esm_import_specifier', { sourceType: 'module' });
   testTransform('not_an_expression_statement');
 });
 
@@ -59,5 +60,6 @@ describe('babel-plugin-unassert with presets', () => {
   testTransform('esm_default_binding', Object.assign({}, opt, { dialect: 'env', sourceType: 'module' }));
   testTransform('esm_default_binding_powerassert', Object.assign({}, opt, { dialect: 'env', sourceType: 'module' }));
   testTransform('esm_namespace_import', Object.assign({}, opt, { dialect: 'env', sourceType: 'module' }));
+  testTransform('esm_import_specifier', Object.assign({}, opt, { dialect: 'env', sourceType: 'module' }));
   testTransform('not_an_expression_statement', opt);
 });
