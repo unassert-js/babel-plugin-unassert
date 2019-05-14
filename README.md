@@ -223,6 +223,10 @@ babel-plugin-unassert also removes assert variable declarations such as,
 * `const assert = require("power-assert").strict`
 * `import assert from "assert"`
 * `import assert from "power-assert"`
+* `import * as assert from "assert"`
+* `import * as assert from "power-assert"`
+* `import {strict as assert} from "assert"`
+* `import {strict as assert} from "power-assert"`
 
 and assignments.
 
