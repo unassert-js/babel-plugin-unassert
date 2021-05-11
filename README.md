@@ -5,7 +5,7 @@ babel-plugin-unassert
 
 [![unassert][unassert-banner]][unassert-url]
 
-[![Build Status][travis-image]][travis-url]
+[![Build Status][ci-image]][ci-url]
 [![NPM version][npm-image]][npm-url]
 [![Code Style][style-image]][style-url]
 [![License][license-image]][license-url]
@@ -262,8 +262,8 @@ Licensed under the [MIT](https://github.com/unassert-js/babel-plugin-unassert/bl
 [npm-url]: https://npmjs.org/package/babel-plugin-unassert
 [npm-image]: https://badge.fury.io/js/babel-plugin-unassert.svg
 
-[travis-url]: https://travis-ci.org/unassert-js/babel-plugin-unassert
-[travis-image]: https://secure.travis-ci.org/unassert-js/babel-plugin-unassert.svg?branch=master
+[ci-image]: https://github.com/unassert-js/babel-plugin-unassert/workflows/Node.js%20CI/badge.svg
+[ci-url]: https://github.com/unassert-js/babel-plugin-unassert/actions?query=workflow%3A%22Node.js+CI%22
 
 [style-url]: https://github.com/Flet/semistandard
 [style-image]: https://img.shields.io/badge/code%20style-semistandard-brightgreen.svg
