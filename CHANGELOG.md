@@ -1,3 +1,11 @@
+## [3.1.0](https://github.com/unassert-js/babel-plugin-unassert/releases/tag/v3.1.0) (2021-05-11)
+
+
+#### Features
+
+* [Add support for `node:` protocol require/import](https://github.com/unassert-js/babel-plugin-unassert/pull/11) by [@make-github-pseudonymous-again](https://github.com/make-github-pseudonymous-again)
+
+
 ### [3.0.1](https://github.com/unassert-js/babel-plugin-unassert/releases/tag/v3.0.1) (2019-05-14)
 
 
