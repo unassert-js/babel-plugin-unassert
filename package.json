@@ -8,6 +8,12 @@
     "url": "https://github.com/twada"
   },
   "bugs": "https://github.com/unassert-js/babel-plugin-unassert/issues",
+  "contributors": [
+    {
+      "name": "Notas Hellout",
+      "url": "https://github.com/make-github-pseudonymous-again"
+    }
+  ],
   "devDependencies": {
     "@babel/core": "^7.0.0",
     "@babel/preset-env": "^7.0.0",

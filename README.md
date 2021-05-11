@@ -248,6 +248,11 @@ AUTHOR
 * [Takuto Wada](https://github.com/twada)
 
 
+CONTRIBUTORS
+---------------------------------------
+* [Notas Hellout](https://github.com/make-github-pseudonymous-again)
+
+
 OUR SUPPORT POLICY
 ---------------------------------------
 
