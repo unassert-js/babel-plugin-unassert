@@ -1,7 +1,7 @@
 {
   "name": "babel-plugin-unassert",
   "description": "Babel plugin for unassert: Encourages programming with assertions by providing tools to compile them away",
-  "version": "3.0.1",
+  "version": "3.1.0",
   "author": {
     "name": "Takuto Wada",
     "email": "takuto.wada@gmail.com",
