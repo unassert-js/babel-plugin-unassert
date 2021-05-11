@@ -5,7 +5,7 @@
  *
  * https://github.com/unassert-js/babel-plugin-unassert
  *
- * Copyright (c) 2015-2019 Takuto Wada
+ * Copyright (c) 2015-2021 Takuto Wada
  * Licensed under the MIT license.
  *   https://github.com/unassert-js/babel-plugin-unassert/blob/master/LICENSE
  */
