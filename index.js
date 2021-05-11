@@ -26,7 +26,7 @@ const isRequireAssert = (id, init) => {
     return false;
   }
   const arg = init.get('arguments')[0];
-  return (arg.isLiteral() && (arg.equals('value', 'assert') || arg.equals('value', 'power-assert')));
+  return (arg.isLiteral() && (arg.equals('value', 'assert') || arg.equals('value', 'power-assert') || arg.equals('value', 'node:assert')));
 };
 
 const isRequireAssertStrict = (id, init) => {
@@ -63,7 +63,7 @@ module.exports = (babel) => {
       },
       ImportDeclaration (nodePath, pluginPass) {
         const source = nodePath.get('source');
-        if (!(source.equals('value', 'assert') || source.equals('value', 'power-assert'))) {
+        if (!(source.equals('value', 'assert') || source.equals('value', 'power-assert') || source.equals('value', 'node:assert'))) {
           return;
         }
         const firstSpecifier = nodePath.get('specifiers')[0];
