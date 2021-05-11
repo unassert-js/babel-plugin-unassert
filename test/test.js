@@ -17,7 +17,7 @@ const testTransform = (fixtureName, options) => {
     const expectedFilepath = path.resolve(__dirname, 'fixtures', fixtureName, `expected${dialect}.${extension}`);
     const result = babel.transformFileSync(fixtureFilepath, Object.assign({
       sourceType: sourceType,
-      plugins: [ unassert ]
+      plugins: [unassert]
     }, options.babelOptions));
     const actual = result.code;
     const expected = fs.readFileSync(expectedFilepath).toString();
