@@ -243,6 +243,103 @@ and assignments.
 * `assert = require("power-assert").strict`
 
 
+
+CUSTOMIZATION
+---------------------------------------
+
+You can customize [Plugin Options](https://babeljs.io/docs/en/plugins#plugin-options) such as assertion patterns via [Config Files](https://babeljs.io/docs/en/config-files)
+
+```json
+{
+  "presets": [
+    ...
+  ],
+  "plugins": [
+    ["babel-plugin-unassert", {
+      "variables": [
+        "invariant",
+        "nassert",
+        "uassert"
+      ],
+      "modules": [
+        "invariant",
+        "nanoassert",
+        "uvu/assert"
+      ]
+    }]
+  ]
+}
+```
+
+or via [@babel/register](https://babeljs.io/docs/en/babel-register).
+
+```javascript
+require('@babel/register')({
+  presets: [...],
+  plugins: [
+    ['babel-plugin-unassert', {
+      variables: [
+        'invariant',
+        'nassert',
+        'uassert'
+      ],
+      modules: [
+        'invariant',
+        'nanoassert',
+        'uvu/assert'
+      ]
+    }]
+  ]
+});
+```
+
+or via ['@babel/core'](https://babeljs.io/docs/en/babel-core/),
+
+```javascript
+const babel = require('@babel/core');
+const jsCode = fs.readFileSync('/path/to/test/some_test.js');
+const transformed = babel.transform(jsCode, {
+  presets: [...],
+  plugins: [
+    ['babel-plugin-unassert', {
+      variables: [
+        'invariant',
+        'nassert',
+        'uassert'
+      ],
+      modules: [
+        'invariant',
+        'nanoassert',
+        'uvu/assert'
+      ]
+    }]
+  ]
+});
+console.log(transformed.code);
+```
+
+#### options
+
+| type     | default value       |
+|:---------|:--------------------|
+| `object` | objects shown below |
+
+Configuration options for `babel-plugin-unassert`. If not passed, default options will be used.
+
+```javascript
+{
+  variables: [
+    'assert'
+  ],
+  modules: [
+    'assert',
+    'power-assert',
+    'node:assert'
+  ]
+}
+```
+
+
 AUTHOR
 ---------------------------------------
 * [Takuto Wada](https://github.com/twada)
