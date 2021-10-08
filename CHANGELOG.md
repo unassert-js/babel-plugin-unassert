@@ -1,3 +1,11 @@
+## [3.2.0](https://github.com/unassert-js/babel-plugin-unassert/releases/tag/v3.2.0) (2021-10-09)
+
+
+#### Features
+
+* [Add plugin options for customization](https://github.com/unassert-js/babel-plugin-unassert/pull/19)
+
+
 ## [3.1.0](https://github.com/unassert-js/babel-plugin-unassert/releases/tag/v3.1.0) (2021-05-11)
 
 
