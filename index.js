@@ -23,22 +23,22 @@ module.exports = (babel, options) => {
     ]
   }, options);
 
-  function isAssertionModuleName(lit) {
+  function isAssertionModuleName (lit) {
     const modules = config.modules;
     return modules.some((name) => lit.equals('value', name));
   }
 
-  function isAssertionVariableName(id) {
+  function isAssertionVariableName (id) {
     const variables = config.variables;
     return variables.some((name) => id.equals('name', name));
   }
 
-  function isAssertionMethod(callee) {
+  function isAssertionMethod (callee) {
     const variables = config.variables;
     return variables.some((name) => callee.matchesPattern(name, true));
   }
 
-  function isAssertionFunction(callee) {
+  function isAssertionFunction (callee) {
     return callee.isIdentifier() && isAssertionVariableName(callee);
   }
 
