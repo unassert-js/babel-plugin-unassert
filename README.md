@@ -247,7 +247,45 @@ and assignments.
 CUSTOMIZATION
 ---------------------------------------
 
-You can customize [Plugin Options](https://babeljs.io/docs/en/plugins#plugin-options) such as assertion patterns via [Config Files](https://babeljs.io/docs/en/config-files)
+You can customize [Plugin Options](https://babeljs.io/docs/en/plugins#plugin-options) such as assertion patterns.
+
+
+input:
+
+```javascript
+'use strict';
+
+var invariant = require('invariant');
+const nassert = require('nanoassert');
+import * as uassert from 'uvu/assert';
+
+
+function add (a, b) {
+    nassert(!isNaN(a));
+
+    uassert.is(Math.sqrt(4), 2);
+    uassert.is(Math.sqrt(144), 12);
+    uassert.is(Math.sqrt(2), Math.SQRT2);
+
+    invariant(someTruthyVal, 'This will not throw');
+    invariant(someFalseyVal, 'This will throw an error with this message');
+
+    return a + b;
+}
+```
+
+output:
+
+```javascript
+'use strict';
+
+function add(a, b) {
+  return a + b;
+}
+```
+
+
+via [Config Files](https://babeljs.io/docs/en/config-files)
 
 ```json
 {
@@ -257,11 +295,14 @@ You can customize [Plugin Options](https://babeljs.io/docs/en/plugins#plugin-opt
   "plugins": [
     ["babel-plugin-unassert", {
       "variables": [
+        "assert",
         "invariant",
         "nassert",
         "uassert"
       ],
       "modules": [
+        "assert",
+        "node:assert",
         "invariant",
         "nanoassert",
         "uvu/assert"
@@ -279,11 +320,14 @@ require('@babel/register')({
   plugins: [
     ['babel-plugin-unassert', {
       variables: [
+        'assert',
         'invariant',
         'nassert',
         'uassert'
       ],
       modules: [
+        'assert',
+        'node:assert',
         'invariant',
         'nanoassert',
         'uvu/assert'
@@ -303,11 +347,14 @@ const transformed = babel.transform(jsCode, {
   plugins: [
     ['babel-plugin-unassert', {
       variables: [
+        'assert',
         'invariant',
         'nassert',
         'uassert'
       ],
       modules: [
+        'assert',
+        'node:assert',
         'invariant',
         'nanoassert',
         'uvu/assert'
@@ -317,6 +364,10 @@ const transformed = babel.transform(jsCode, {
 });
 console.log(transformed.code);
 ```
+
+
+
+
 
 #### options
 
