@@ -11,41 +11,71 @@
  */
 'use strict';
 
-const isRequireAssert = (id, init) => {
-  if (!id.isIdentifier()) {
-    return false;
-  }
-  if (!id.equals('name', 'assert')) {
-    return false;
-  }
-  if (!init.isCallExpression()) {
-    return false;
-  }
-  const callee = init.get('callee');
-  if (!callee.isIdentifier() || !callee.equals('name', 'require')) {
-    return false;
-  }
-  const arg = init.get('arguments')[0];
-  return (arg.isLiteral() && (arg.equals('value', 'assert') || arg.equals('value', 'power-assert') || arg.equals('value', 'node:assert')));
-};
+module.exports = (babel, options) => {
+  const config = Object.assign({
+    variables: [
+      'assert'
+    ],
+    modules: [
+      'assert',
+      'power-assert',
+      'node:assert'
+    ]
+  }, options);
 
-const isRequireAssertStrict = (id, init) => {
-  if (!init.isMemberExpression()) {
-    return false;
+  function isAssertionModuleName(lit) {
+    const modules = config.modules;
+    return modules.some((name) => lit.equals('value', name));
   }
-  if (!isRequireAssert(id, init.get('object'))) {
-    return false;
-  }
-  const prop = init.get('property');
-  if (!prop.isIdentifier()) {
-    return false;
-  }
-  return prop.equals('name', 'strict');
-};
 
-const isRemovalTarget = (id, init) => isRequireAssert(id, init) || isRequireAssertStrict(id, init);
+  function isAssertionVariableName(id) {
+    const variables = config.variables;
+    return variables.some((name) => id.equals('name', name));
+  }
 
-module.exports = (babel) => {
+  function isAssertionMethod(callee) {
+    const variables = config.variables;
+    return variables.some((name) => callee.matchesPattern(name, true));
+  }
+
+  function isAssertionFunction(callee) {
+    return callee.isIdentifier() && isAssertionVariableName(callee);
+  }
+
+  const isRequireAssert = (id, init) => {
+    if (!id.isIdentifier()) {
+      return false;
+    }
+    if (!isAssertionVariableName(id)) {
+      return false;
+    }
+    if (!init.isCallExpression()) {
+      return false;
+    }
+    const callee = init.get('callee');
+    if (!callee.isIdentifier() || !callee.equals('name', 'require')) {
+      return false;
+    }
+    const arg = init.get('arguments')[0];
+    return (arg.isLiteral() && isAssertionModuleName(arg));
+  };
+
+  const isRequireAssertStrict = (id, init) => {
+    if (!init.isMemberExpression()) {
+      return false;
+    }
+    if (!isRequireAssert(id, init.get('object'))) {
+      return false;
+    }
+    const prop = init.get('property');
+    if (!prop.isIdentifier()) {
+      return false;
+    }
+    return prop.equals('name', 'strict');
+  };
+
+  const isRemovalTarget = (id, init) => isRequireAssert(id, init) || isRequireAssertStrict(id, init);
+
   return {
     visitor: {
       AssignmentExpression (nodePath, pluginPass) {
@@ -63,7 +93,7 @@ module.exports = (babel) => {
       },
       ImportDeclaration (nodePath, pluginPass) {
         const source = nodePath.get('source');
-        if (!(source.equals('value', 'assert') || source.equals('value', 'power-assert') || source.equals('value', 'node:assert'))) {
+        if (!(isAssertionModuleName(source))) {
           return;
         }
         const firstSpecifier = nodePath.get('specifiers')[0];
@@ -71,15 +101,13 @@ module.exports = (babel) => {
           return;
         }
         const local = firstSpecifier.get('local');
-        if (local.equals('name', 'assert')) {
+        if (isAssertionVariableName(local)) {
           nodePath.remove();
         }
       },
       CallExpression (nodePath, pluginPass) {
         const callee = nodePath.get('callee');
-        if ((callee.isIdentifier() && callee.equals('name', 'assert')) ||
-              callee.matchesPattern('assert', true) ||
-              callee.matchesPattern('console.assert')) {
+        if (isAssertionFunction(callee) || isAssertionMethod(callee) || callee.matchesPattern('console.assert')) {
           if (nodePath.parentPath && nodePath.parentPath.isExpressionStatement()) {
             nodePath.remove();
           }
